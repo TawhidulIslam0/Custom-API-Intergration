@@ -30,3 +30,12 @@
   * Ran Spectral OpenAPI linting and confirmed zero errors (`reports/spectral-lint-report.md`)
   * Completed the API Specification Document - Deliverable 2 (`docs/api-specification-document.md`)
   * Initialized the integration data mapping directory structure (`mappings/README.md`)
+
+  * **Day 6 — Data Transformation & Mapping (Domains 1–5)**
+  * Created standardized mapping template and rules (`mappings/template.md`)
+  * Documented currency conversion and fiscal period mapping logic (`mappings/currency-fiscal-logic.md`)
+  * Mapped General Ledger domain with 12 field transformations (`mappings/domain-01-gl.md`)[cite: 3]
+  * Mapped Accounts Payable domain with 8 field transformations and ageing calculations (`mappings/domain-02-ap.md`)[cite: 4]
+  * Mapped Accounts Receivable domain with 8 field transformations and dunning levels (`mappings/domain-03-ar.md`)[cite: 5]
+  * Mapped Cost Centre Accounting domain with 6 field transformations and hierarchy flattening (`mappings/domain-04-cost-centre.md`)[cite: 7]
+  * Mapped Profit Centre Accounting domain with 4 field transformations and segment alignment (`mappings/domain-05-profit-centre.md`)[cite: 6]

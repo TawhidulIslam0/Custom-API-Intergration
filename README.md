@@ -17,7 +17,7 @@ This repository contains the design, specification, and complete architectural d
   * *Artifacts:* OpenAPI 3.0 YAML for source endpoints SRC-001 through SRC-012, Postman collection, source documentation.
 * [x] **Day 5: API Specification — Destination Endpoints (FinSight)**
   * *Artifacts:* OpenAPI 3.0 YAML for destination endpoints DST-001 through DST-012, OAuth 2.0 specs, Spectral linting report (zero errors), Deliverable 2 (D2) complete.
-* [ ] **Day 6: Data Transformation & Mapping (Domains 1–5)**
+* [x] **Day 6: Data Transformation & Mapping (Domains 1–5)**
   * *Artifacts:* Mapping templates for General Ledger, Accounts Payable, Accounts Receivable, Cost Centre, and Profit Centre accounting (38 field mappings).
 * [ ] **Day 7: Data Transformation & Mapping (Domains 6–10) + Advanced Patterns**
   * *Artifacts:* Mappings for Material Ledger, Purchase Orders, Sales Orders, Fixed Assets, and Bank Statements; advanced transformation rules; Deliverable 3 (D3) complete.
