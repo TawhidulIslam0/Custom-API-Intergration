@@ -6,3 +6,4 @@ This repository contains the design, specification, and proof-of-concept impleme
 ## Deliverables Checklist
 
 * [x] D1: Integration Architecture Document (C4 diagrams, risk register)
+* [x] D2: API Specification (OpenAPI specs, both directions, zero lint errors)
