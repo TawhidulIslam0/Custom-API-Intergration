@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: Zetheta FinSight Destination Endpoints - Part 1 (Financials & Controlling)
+  version: 1.0.0
+  description: Ingestion API specification for Zetheta FinSight core financial endpoints (DST-001 to DST-006).
+servers:
+  - url: https://api.finsight.zetheta.cloud/v1
+    description: Zetheta FinSight Production Ingestion Gateway
+paths:
+  /DST-001/journal-entries:
+    post:
+      summary: DST-001 - Ingest General Ledger Journal Entries
+      description: Receives batched GL line items from the middleware transformation engine.
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique transaction identifier to prevent duplicate ingestion.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - batch_id
+                - records
+              properties:
+                batch_id:
+                  type: string
+                  format: uuid
+                records:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      CompanyCode:
+                        type: string
+                      AccountingDocument:
+                        type: string
+                      Amount:
+                        type: number
+      responses:
+        '202':
+          description: Batch accepted for asynchronous processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ACCEPTED"
+                  tracking_id:
+                    type: string
+                    format: uuid
+  /DST-002/ap-subledger:
+    post:
+      summary: DST-002 - Ingest Accounts Payable Open/Cleared Items
+      description: Ingests AP subledger records into FinSight.
+      responses:
+        '202':
+          description: AP batch accepted
+  /DST-003/ar-subledger:
+    post:
+      summary: DST-003 - Ingest Accounts Receivable Line Items
+      description: Ingests AR billing and collection records into FinSight.
+      responses:
+        '202':
+          description: AR batch accepted
+  /DST-004/cost-centres:
+    post:
+      summary: DST-004 - Ingest Cost Centre Master Data
+      description: Ingests cost centre hierarchies and master records.
+      responses:
+        '202':
+          description: Cost Centre batch accepted
+  /DST-005/profit-centres:
+    post:
+      summary: DST-005 - Ingest Profit Centre Alignments
+      description: Ingests profit centre segments and attributes.
+      responses:
+        '202':
+          description: Profit Centre batch accepted
+  /DST-006/material-ledger:
+    post:
+      summary: DST-006 - Ingest Material Ledger Valuations
+      description: Ingests periodic actual costing and price variance allocations.
+      responses:
+        '202':
+          description: Material Ledger batch accepted

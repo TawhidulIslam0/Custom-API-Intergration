@@ -1,0 +1,90 @@
+openapi: 3.0.3
+info:
+  title: Zetheta FinSight Destination Endpoints - Part 2 (Operations, Assets & Security)
+  version: 1.0.0
+  description: Ingestion API specification for FinSight operational endpoints (DST-007 to DST-012), OAuth 2.0 flows, and webhook callbacks.
+servers:
+  - url: https://api.finsight.zetheta.cloud/v1
+    description: Zetheta FinSight Production Ingestion Gateway
+paths:
+  /DST-007/purchase-orders:
+    post:
+      summary: DST-007 - Ingest Purchase Orders & GR/IR Data
+      description: Receives PO commitments and goods receipt tracking records.
+      security:
+        - OAuth2: [finsight:ingest]
+      responses:
+        '202':
+          description: PO batch accepted
+  /DST-008/sales-orders:
+    post:
+      summary: DST-008 - Ingest Sales Orders & Revenue Data
+      description: Ingests billing and order intake details.
+      security:
+        - OAuth2: [finsight:ingest]
+      responses:
+        '202':
+          description: SO batch accepted
+  /DST-009/fixed-assets:
+    post:
+      summary: DST-009 - Ingest Fixed Asset Registers & Depreciation
+      description: Ingests asset capitalizations and monthly depreciation postings.
+      responses:
+        '202':
+          description: Fixed Assets batch accepted
+  /DST-010/bank-statements:
+    post:
+      summary: DST-010 - Ingest Electronic Bank Statements & Reconciliation
+      description: Ingests cleared cash line items and lockbox receipts.
+      responses:
+        '202':
+          description: Bank Statements batch accepted
+  /DST-011/budget-actual:
+    post:
+      summary: DST-011 - Ingest Budget vs Actual Controlling Metrics
+      description: Ingests cost center budget variances and forecast versions.
+      responses:
+        '202':
+          description: Budget vs Actual batch accepted
+  /DST-012/inventory:
+    post:
+      summary: DST-012 - Ingest Inventory Valuation & Stock Movements
+      description: Ingests material stock balances and revaluation adjustments.
+      responses:
+        '202':
+          description: Inventory batch accepted
+
+components:
+  securitySchemes:
+  OAuth2:
+    type: oauth2
+    description: OAuth 2.0 Client Credentials Grant with automated token rotation.
+    flows:
+      clientCredentials:
+        tokenUrl: https://auth.finsight.zetheta.cloud/oauth/token
+        scopes:
+          finsight:ingest: Grants write permissions for ERP ingestion pipelines.
+          finsight:read: Grants read permissions for verification and status checks.
+  callbacks:
+    IngestionWebhookCallback:
+      '{$request.body#/webhook_url}':
+        post:
+          summary: Asynchronous Ingestion Status Callback
+          description: FinSight calls this webhook to report batch success, failure, or validation warnings.
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    batch_id:
+                      type: string
+                      format: uuid
+                    status:
+                      type: string
+                      enum: [SUCCESS, FAILED, PARTIAL]
+                    error_details:
+                      type: string
+          responses:
+            '200':
+              description: Callback received successfully
