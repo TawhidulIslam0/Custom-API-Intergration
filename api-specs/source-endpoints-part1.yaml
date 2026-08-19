@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: SAP S/4HANA Source Endpoints - Part 1 (Financials & Controlling)
+  version: 1.0.0
+  description: OpenAPI specification for SAP S/4HANA ODP/CDS extraction endpoints (SRC-001 to SRC-006).
+servers:
+  - url: https://s4hana.meridian.internal/sap/bc/srt/rfc/sap
+    description: Meridian Manufacturing SAP S/4HANA Production Gateway
+paths:
+  /SRC-001/journal-entries:
+    get:
+      summary: SRC-001 - General Ledger Journal Entry Items
+      description: Extracts GL line items via ODP CDS View I_OperationalAcctgDocItem with delta token support.
+      parameters:
+        - name: delta_token
+          in: query
+          schema:
+            type: string
+          description: ODP change log token for delta extraction
+        - name: $top
+          in: query
+          schema:
+            type: integer
+            default: 1000
+          description: Pagination page size limit
+      responses:
+        '200':
+          description: Successful extraction of GL line items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  delta_token:
+                    type: string
+                  records:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        CompanyCode:
+                          type: string
+                        FiscalYear:
+                          type: string
+                        AccountingDocument:
+                          type: string
+                        AmountInLocalCurrency:
+                          type: number
+  /SRC-002/ap-subledger:
+    get:
+      summary: SRC-002 - Accounts Payable Line Items
+      description: Extracts vendor open and cleared items via CDS view I_APDocumentItem.
+      responses:
+        '200':
+          description: Successful AP extraction
+  /SRC-003/ar-subledger:
+    get:
+      summary: SRC-003 - Accounts Receivable Line Items
+      description: Extracts customer billing and payment items via CDS view I_ARDocumentItem.
+      responses:
+        '200':
+          description: Successful AR extraction
+  /SRC-004/cost-centres:
+    get:
+      summary: SRC-004 - Cost Centre Master & Hierarchy
+      description: Extracts cost centre master data and hierarchy groups via table CSKS.
+      responses:
+        '200':
+          description: Successful Cost Centre extraction
+  /SRC-005/profit-centres:
+    get:
+      summary: SRC-005 - Profit Centre Master & Segment Alignment
+      description: Extracts profit centre master data via table CEPC.
+      responses:
+        '200':
+          description: Successful Profit Centre extraction
+  /SRC-006/material-ledger:
+    get:
+      summary: SRC-006 - Material Ledger Periodic Valuation
+      description: Extracts actual costing and price difference allocations via table MLIT/MLPP.
+      responses:
+        '200':
+          description: Successful Material Ledger extraction

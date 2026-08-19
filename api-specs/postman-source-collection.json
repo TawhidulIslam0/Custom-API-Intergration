@@ -1,0 +1,24 @@
+{
+  "info": {
+    "name": "FDE-9B SAP S/4HANA Source Endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "SRC-001 General Ledger",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "delta-token", "value": "TOKEN_ABC123" }
+        ],
+        "url": {
+          "raw": "https://s4hana.meridian.internal/sap/bc/srt/rfc/sap/SRC-001/journal-entries?$top=1000",
+          "protocol": "https",
+          "host": ["s4hana", "meridian", "internal"],
+          "path": ["sap", "bc", "srt", "rfc", "sap", "SRC-001", "journal-entries"],
+          "query": [{ "key": "$top", "value": "1000" }]
+        }
+      }
+    }
+  ]
+}

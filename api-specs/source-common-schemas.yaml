@@ -1,0 +1,71 @@
+openapi: 3.0.3
+info:
+  title: SAP S/4HANA Source Common Schemas & Parameters
+  version: 1.0.0
+  description: Shared pagination, delta extraction parameters, and error response schemas for SAP S/4HANA integration.
+paths: {}
+components:
+  parameters:
+    DeltaTokenParam:
+      name: delta-token
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Odp change log delta token provided in the previous extraction response.
+    TopParam:
+      name: $top
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 1000
+        maximum: 5000
+      description: Pagination page size limit for chunked extractions.
+    SkipParam:
+      name: $skip
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 0
+      description: Number of records to skip for offset-based paging fallback.
+  responses:
+    StandardError400:
+      description: Bad Request - Invalid parameters or malformed delta token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    StandardError401:
+      description: Unauthorized - Invalid or expired SAP RFC / OAuth credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    StandardError429:
+      description: Rate Limit Exceeded - SAP RFC connection pool saturated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - error_code
+        - message
+        - timestamp
+      properties:
+        error_code:
+          type: string
+          example: "SAP_RFC_POOL_EXHAUSTED"
+        message:
+          type: string
+          example: "Active RFC connections exceeded safety threshold of 50."
+        timestamp:
+          type: string
+          format: date-time
+        correlation_id:
+          type: string
+          format: uuid

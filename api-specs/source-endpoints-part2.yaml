@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: SAP S/4HANA Source Endpoints - Part 2 (Operations & Assets)
+  version: 1.0.0
+  description: OpenAPI specification for SAP S/4HANA extraction endpoints for operational and asset domains (SRC-007 to SRC-012).
+servers:
+  - url: https://s4hana.meridian.internal/sap/bc/srt/rfc/sap
+    description: Meridian Manufacturing SAP S/4HANA Production Gateway
+paths:
+  /SRC-007/purchase-orders:
+    get:
+      summary: SRC-007 - Purchase Orders & GR/IR Tracking
+      description: Extracts purchase order header and item details via CDS view I_PurchaseOrderAPI01.
+      parameters:
+        - name: delta_token
+          in: query
+          schema:
+            type: string
+          description: Change log token for delta extraction
+      responses:
+        '200':
+          description: Successful Purchase Order extraction
+  /SRC-008/sales-orders:
+    get:
+      summary: SRC-008 - Sales Orders & Revenue Recognition
+      description: Extracts sales order schedule lines and billing blocks via CDS view I_SalesDocument.
+      responses:
+        '200':
+          description: Successful Sales Order extraction
+  /SRC-009/fixed-assets:
+    get:
+      summary: SRC-009 - Fixed Assets Master & Depreciation
+      description: Extracts asset values, depreciation areas, and master records via table ANLA/ANLC.
+      responses:
+        '200':
+          description: Successful Fixed Assets extraction
+  /SRC-010/bank-statements:
+    get:
+      summary: SRC-010 - Bank Statements & Electronic Payments
+      description: Extracts electronic bank statement line items via FEBKO/FECL tables.
+      responses:
+        '200':
+          description: Successful Bank Statements extraction
+  /SRC-011/budget-actual:
+    get:
+      summary: SRC-011 - Budget vs Actual Cost Controlling
+      description: Extracts budget allocations and actual postings via table COSP/COSS.
+      responses:
+        '200':
+          description: Successful Budget vs Actual extraction
+  /SRC-012/inventory:
+    get:
+      summary: SRC-012 - Inventory Valuations & Material Movements
+      description: Extracts material stock quantities and valuation data via table MBEW/MSEG.
+      responses:
+        '200':
+          description: Successful Inventory extraction
