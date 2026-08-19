@@ -15,7 +15,7 @@ This repository contains the design, specification, and complete architectural d
   * *Artifacts:* 4 data flow diagrams (ODP delta, batch, error/retry, reconciliation), 3+ Mermaid sequence diagrams, risk register (12 risks), and Deliverable 1 (D1) first complete draft.
 * [x] **Day 4: API Specification — Source Endpoints (SAP S/4HANA)**
   * *Artifacts:* OpenAPI 3.0 YAML for source endpoints SRC-001 through SRC-012, Postman collection, source documentation.
-* [ ] **Day 5: API Specification — Destination Endpoints (FinSight)**
+* [x] **Day 5: API Specification — Destination Endpoints (FinSight)**
   * *Artifacts:* OpenAPI 3.0 YAML for destination endpoints DST-001 through DST-012, OAuth 2.0 specs, Spectral linting report (zero errors), Deliverable 2 (D2) complete.
 * [ ] **Day 6: Data Transformation & Mapping (Domains 1–5)**
   * *Artifacts:* Mapping templates for General Ledger, Accounts Payable, Accounts Receivable, Cost Centre, and Profit Centre accounting (38 field mappings).

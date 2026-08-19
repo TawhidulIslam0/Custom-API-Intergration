@@ -22,3 +22,11 @@
   * Specified operational and asset source endpoints SRC-007 through SRC-012 (`api-specs/source-endpoints-part2.yaml`)
   * Defined standard pagination strategies, ODP delta extraction parameters, and uniform error schemas (`api-specs/source-common-schemas.yaml`)
   * Created Postman collection with example payloads and authored source API documentation (`api-specs/postman-source-collection.json`, `docs/source-api-documentation.md`)
+
+  * **Day 5 — API Specification — Destination Endpoints (FinSight)**
+  * Specified destination endpoints DST-001 through DST-006 for FinSight financial ingestion (`api-specs/destination-endpoints-part1.yaml`)
+  * Specified destination endpoints DST-007 through DST-012 for operational/asset ingestion, along with OAuth 2.0 client credentials security and webhook callback specifications (`api-specs/destination-endpoints-part2.yaml`)
+  * Added OAuth 2.0 token caching and refresh sequence diagram (`diagrams/sequences/seq-04-oauth-flow-1.png`)
+  * Ran Spectral OpenAPI linting and confirmed zero errors (`reports/spectral-lint-report.md`)
+  * Completed the API Specification Document - Deliverable 2 (`docs/api-specification-document.md`)
+  * Initialized the integration data mapping directory structure (`mappings/README.md`)
