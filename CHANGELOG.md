@@ -39,3 +39,12 @@
   * Mapped Accounts Receivable domain with 8 field transformations and dunning levels (`mappings/domain-03-ar.md`)[cite: 5]
   * Mapped Cost Centre Accounting domain with 6 field transformations and hierarchy flattening (`mappings/domain-04-cost-centre.md`)[cite: 7]
   * Mapped Profit Centre Accounting domain with 4 field transformations and segment alignment (`mappings/domain-05-profit-centre.md`)[cite: 6]
+
+  * **Day 7 — Data Transformation & Mapping (Domains 6–10) + Advanced Patterns**
+  * Mapped Material Ledger domain with actual costing layer and price difference allocation (`mappings/domain-06-material-ledger.md`) [cite: 9]
+  * Mapped Purchase Orders domain with GR/IR reconciliation and pricing conditions (`mappings/domain-07-purchase-orders.md`) [cite: 8]
+  * Mapped Sales Orders domain with revenue recognition stage mapping (`mappings/domain-08-sales-orders.md`) [cite: 12]
+  * Mapped Fixed Assets domain with depreciation method mapping (`mappings/domain-09-fixed-assets.md`) [cite: 11]
+  * Mapped Bank Statements domain with statement format normalization (`mappings/domain-10-bank-statements.md`) [cite: 10]
+  * Documented advanced transformation patterns for currency conversion rules, hierarchy flattening, and fiscal periods (`docs/advanced-transformation-patterns.md`) [cite: 13]
+  * Compiled and completed Data Transformation Specification (Deliverable 3) with 50+ total field mappings (`docs/data-transformation-specification.md`) [cite: 14]
