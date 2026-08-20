@@ -77,3 +77,11 @@
   * Wrote 3 security test scenarios (token expiry/refresh, unauthorized access blocking, encryption verification) and 2 reconciliation test scenarios (variance detection, completeness checks) (`testing/security-reconciliation-scenarios.md`)
   * Created the requirements traceability matrix mapping all 25 test scenarios back to their specific functional and technical design requirements (`testing/traceability-matrix.md`)
   * Compiled complete Integration Testing Plan (Deliverable 7) document (`docs/integration-testing-plan.md`)[cite: 15]
+
+  * **Day 12 — Deployment Runbook & Rollback Procedure**
+  * Created 16-item pre-deployment checklist covering environments, secrets, SSL/TLS certificates, DB migrations, Kafka readiness, and backup verifications (`deployment/pre-deployment-checklist.md`)
+  * Wrote step-by-step deployment guide with estimated durations and Kubernetes/Helm execution commands (`deployment/deployment-steps.md`)
+  * Specified 11 post-deployment verification checks covering pod health, ODP streams, Kafka lag, transform throughput, API sync, and alerting (`deployment/post-deployment-verification.md`)
+  * Designed rollback procedure and decision matrix with severity levels, trigger conditions, max decision times, and recovery commands (`deployment/rollback-procedure.md`)
+  * Defined standard maintenance windows and tiered escalation contact matrix (`deployment/maintenance-escalation.md`)
+  * Compiled complete Deployment Runbook (Deliverable 8) document (`docs/deployment-runbook.md`)
