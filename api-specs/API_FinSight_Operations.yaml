@@ -7,6 +7,9 @@ info:
     DST-007 through DST-012 ingestion APIs covering Purchase Orders,
     Sales Orders, Fixed Assets, Bank Statements, Budget versus Actual,
     and Inventory.
+  contact:
+    name: Integration Support Team
+    email: support@meridian.internal
 
 servers:
   - url: https://api.finsight.zetheta.cloud/v1
@@ -16,12 +19,29 @@ security:
   - OAuth2:
       - finsight:ingest
 
+tags:
+  - name: Purchase Orders
+    description: Purchase orders and goods receipt / invoice receipt ingestion
+  - name: Sales Orders
+    description: Sales orders and revenue data ingestion
+  - name: Fixed Assets
+    description: Fixed assets master data and depreciation ingestion
+  - name: Bank Statements
+    description: Bank statements and cash clearing ingestion
+  - name: Budget vs Actuals
+    description: Budget versus actual financial data ingestion
+  - name: Inventory
+    description: Inventory valuation and stock movements ingestion
+
 paths:
 
   /DST-007/purchase-orders:
     post:
       operationId: ingestPurchaseOrders
       summary: DST-007 - Ingest Purchase Orders and GR/IR
+      description: Ingests purchase order line items and goods receipt / invoice receipt clearing data.
+      tags:
+        - Purchase Orders
       parameters:
         - $ref: '#/components/parameters/IdempotencyKey'
         - $ref: '#/components/parameters/CorrelationId'
@@ -53,6 +73,9 @@ paths:
     post:
       operationId: ingestSalesOrders
       summary: DST-008 - Ingest Sales Orders and Revenue Data
+      description: Ingests sales order details, fulfillment schedules, and billing revenue lines.
+      tags:
+        - Sales Orders
       parameters:
         - $ref: '#/components/parameters/IdempotencyKey'
         - $ref: '#/components/parameters/CorrelationId'
@@ -84,6 +107,9 @@ paths:
     post:
       operationId: ingestFixedAssets
       summary: DST-009 - Ingest Fixed Assets and Depreciation
+      description: Ingests capital asset master records, acquisitions, retirements, and monthly depreciation schedules.
+      tags:
+        - Fixed Assets
       parameters:
         - $ref: '#/components/parameters/IdempotencyKey'
         - $ref: '#/components/parameters/CorrelationId'
@@ -115,6 +141,9 @@ paths:
     post:
       operationId: ingestBankStatements
       summary: DST-010 - Ingest Bank Statements
+      description: Ingests electronic bank statement transactions and multi-currency cash liquidity items.
+      tags:
+        - Bank Statements
       parameters:
         - $ref: '#/components/parameters/IdempotencyKey'
         - $ref: '#/components/parameters/CorrelationId'
@@ -146,6 +175,9 @@ paths:
     post:
       operationId: ingestBudgetActual
       summary: DST-011 - Ingest Budget versus Actual
+      description: Ingests financial planning budget figures alongside actual ledger expenditures for variance analysis.
+      tags:
+        - Budget vs Actuals
       parameters:
         - $ref: '#/components/parameters/IdempotencyKey'
         - $ref: '#/components/parameters/CorrelationId'
@@ -177,6 +209,9 @@ paths:
     post:
       operationId: ingestInventory
       summary: DST-012 - Ingest Inventory Valuation and Stock Movements
+      description: Ingests warehouse stock quantities, periodic material valuations, and inventory movement logs.
+      tags:
+        - Inventory
       parameters:
         - $ref: '#/components/parameters/IdempotencyKey'
         - $ref: '#/components/parameters/CorrelationId'

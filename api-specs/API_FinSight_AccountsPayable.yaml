@@ -7,6 +7,9 @@ info:
     DST-001 through DST-006 ingestion APIs for General Ledger,
     Accounts Payable, Accounts Receivable, Cost Centre, Profit Centre,
     and Material Ledger data.
+  contact:
+    name: Integration Support Team
+    email: support@meridian.internal
 
 servers:
   - url: https://api.finsight.zetheta.cloud/v1
@@ -15,6 +18,20 @@ servers:
 security:
   - OAuth2:
       - finsight:ingest
+
+tags:
+  - name: General Ledger
+    description: General ledger journal entries ingestion
+  - name: Accounts Payable
+    description: Accounts payable open and cleared items
+  - name: Accounts Receivable
+    description: Accounts receivable billing and collections
+  - name: Cost Centres
+    description: Cost centre master data and hierarchies
+  - name: Profit Centres
+    description: Profit centre attributes and segment reporting
+  - name: Material Ledger
+    description: Material ledger actual costing and valuation
 
 paths:
 

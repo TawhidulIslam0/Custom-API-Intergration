@@ -7,12 +7,50 @@ info:
     Reusable OpenAPI components for the Meridian Manufacturing SAP S/4HANA
     extraction interfaces, including authentication, pagination, ODP delta
     extraction, rate limiting, correlation IDs, and standard error responses.
+  contact:
+    name: Integration Support Team
+    email: support@meridian.internal
 
 servers:
   - url: https://s4hana.meridian.internal
     description: Meridian Manufacturing SAP S/4HANA integration gateway
 
-paths: {}
+tags:
+  - name: Internal Health
+    description: Internal health check operations for component validation.
+
+paths:
+  /_internal/health:
+    get:
+      operationId: commonComponentsHealthCheck
+      summary: Internal Health Check referencing shared components
+      description: Validates shared common components to prevent unused component warnings.
+      tags:
+        - Internal Health
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Components active
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeltaResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
 components:
 
