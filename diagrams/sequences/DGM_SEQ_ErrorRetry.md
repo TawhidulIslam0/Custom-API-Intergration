@@ -1,0 +1,22 @@
+# Sequence Diagram 2 — Error Scenario with Retry and Dead-Letter
+
+```mermaid
+sequenceDiagram
+    participant TE as Transform Engine
+    participant FS as FinSight
+    participant DLQ as Dead Letter Queue
+    participant Ops as Ops Team
+
+    TE->>FS: POST /journal-entries
+    FS-->>TE: 429 Rate Limited (Retry-After: 5s)
+    TE->>TE: Wait 5s (honour Retry-After)
+    TE->>FS: POST /journal-entries (retry 1)
+    FS-->>TE: 500 Internal Error
+    TE->>TE: Exponential backoff (2s)
+    TE->>FS: POST /journal-entries (retry 2)
+    FS-->>TE: 500 Internal Error
+    TE->>TE: Max retries (3) reached
+    TE->>DLQ: Route record + error context
+    DLQ->>Ops: Alert - DLQ depth threshold
+    Ops->>DLQ: Manual review + reprocess
+```
