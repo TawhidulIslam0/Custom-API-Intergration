@@ -5,18 +5,18 @@ This audit report verifies architectural, API, error handling, monitoring, and t
 
 ## Audit Findings & Verification Results
 1. **Architecture & C4 Alignment**: 
-   * Container and component diagrams match the microservices deployed via Helm in the deployment runbook (`deployment/deployment-steps.md`).
+   * Container and component diagrams match the microservices deployed via Helm in the deployment runbook (`deployment/D8_Deployment_Steps_v1.md`).
    * Kafka topics, schema registry settings, and database configurations align across architecture and deployment documents.
 
 2. **API Specification Traceability**:
-   * Source endpoints (`api-specs/source-endpoints-part1.yaml`, `api-specs/source-endpoints-part2.yaml`) and destination endpoints (`api-specs/destination-endpoints-part1.yaml`, `api-specs/destination-endpoints-part2.yaml`) are fully referenced in the Technical Design Review (`stakeholder/technical-design-review.md`).
-   * Zero linting errors confirmed via Spectral OpenAPI reports (`reports/spectral-lint-report.md`).
+   * Source endpoints (`api-specs/API_SAP_Operations.yaml`, `api-specs/API_SAP_GeneralLedger.yaml`, `api-specs/API_SAP_CommonSchemas.yaml`) and destination endpoints (`api-specs/API_FinSight_Operations.yaml`, `api-specs/API_FinSight_AccountsPayable.yaml`) are fully referenced in the Technical Design Review (`stakeholder/DOC_Technical_Design_Review_v1.md`).
+   * Zero linting errors confirmed via Spectral OpenAPI reports (`reports/DOC_Spectral_Lint_Report_v1.md`).
 
 3. **Error Handling & Resilience**:
-   * Error taxonomies (`errors/taxonomy.md`), circuit breakers (`resilience/circuit-breaker.md`), and DLQ architectures (`resilience/dlq-architecture.md`) are consistently integrated into the reconciliation and testing scenarios (`docs/integration-testing-plan.md`).
+   * Error taxonomies (`errors/ERR_Taxonomy_v1.md`), circuit breakers (`resilience/DOC_Circuit_Breaker_v1.md`), and DLQ architectures are consistently integrated into the reconciliation and testing scenarios (`docs/integration-testing-plan.md`).
 
 4. **Monitoring & Alerting Consistency**:
-   * 12 Grafana panels and P1-P4 alerting rules (`monitoring/alerting-rules.md`, `monitoring/dashboard-panels.md`) align with the post-deployment verification checks (`deployment/post-deployment-verification.md`).
+   * 12 Grafana panels and P1-P4 alerting rules align with the post-deployment verification checks (`deployment/D8_Post_Deployment_Verification_v1.md`).
 
 5. **Stakeholder Alignment**:
-   * CFO executive summary (`stakeholder/executive-summary-cfo.md`), Client IT handoff (`stakeholder/technical-handoff-it.md`), and Platform Engineering review (`stakeholder/technical-design-review.md`) accurately reflect system capabilities, SLAs, and performance thresholds.
+   * CFO executive summary, Client IT handoff, and Platform Engineering review (`stakeholder/DOC_Technical_Design_Review_v1.md`) accurately reflect system capabilities, SLAs, and performance thresholds.
