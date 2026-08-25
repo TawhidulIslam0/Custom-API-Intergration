@@ -1,7 +1,7 @@
-# Failure Injection Test Scenarios (Scenarios FI-01 to FI-05)
+# Failure Injection Test Scenarios (Scenarios FI-01 to FI-06)
 
 ## Overview
-This document specifies the 5 failure injection test scenarios validating resilience, circuit breakers, retries, and DLQ routing.
+This document specifies the 6 failure injection test scenarios validating resilience, circuit breakers, retries, and DLQ routing.
 
 ## Scenarios
 1. **FI-01: SAP Connection Failure**
@@ -28,3 +28,8 @@ This document specifies the 5 failure injection test scenarios validating resili
    * **Objective**: Test integration engine behavior during a simulated network partition.
    * **Input**: Network isolation between microservice cluster and downstream data stores.
    * **Expected Result**: Transactions safely queue or fail gracefully without corrupting transactional states.
+
+6. **FI-06: Database Deadlock & Retry Recovery**
+   * **Objective**: Test system resilience and transaction isolation when a database deadlock occurs during concurrent batch writes.
+   * **Input**: Simulated SQL deadlock exception (`SQLSTATE 40001`) injected during simultaneous ledger updates.
+   * **Expected Result**: Transaction rolls back safely, triggers an automated exponential backoff retry, and commits successfully on the subsequent attempt.

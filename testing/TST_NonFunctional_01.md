@@ -1,7 +1,7 @@
-# Non-Functional Test Scenarios (Scenarios NF-01 to NF-05)
+# Non-Functional Test Scenarios (Scenarios NF-01 to NF-06)
 
 ## Overview
-This document specifies the 5 non-functional test scenarios evaluating system performance, scalability, latency, and endurance.
+This document specifies the 6 non-functional test scenarios evaluating system performance, scalability, latency, and endurance.
 
 ## Scenarios
 1. **NF-01: Peak Load Ingestion**
@@ -28,3 +28,8 @@ This document specifies the 5 non-functional test scenarios evaluating system pe
    * **Objective**: Verify system stability and absence of memory leaks over a continuous 24-hour run.
    * **Input**: Continuous simulated event stream.
    * **Expected Result**: Stable memory consumption with zero OOM errors or performance degradation.
+
+6. **NF-06: Cold-Start Container Scaling**
+   * **Objective**: Evaluate container provisioning speed and request handling when scaling microservice workers from zero replicas under sudden traffic spikes.
+   * **Input**: Immediate burst of 300 concurrent extraction requests while worker pods are scaled to zero.
+   * **Expected Result**: Kubernetes horizontal and cluster autoscalers provision workers within SLA, preventing gateway timeout errors.

@@ -1,7 +1,7 @@
-# Functional Test Scenarios (Scenarios F-01 to F-10)
+# Functional Test Scenarios (Scenarios F-01 to F-11)
 
 ## Overview
-This document specifies the 10 functional test scenarios for validating end-to-end data ingestion, transformation, and processing between SAP S/4HANA and Zetheta FinSight.
+This document specifies the 11 functional test scenarios for validating end-to-end data ingestion, transformation, and processing between SAP S/4HANA and Zetheta FinSight.
 
 ## Scenarios
 1. **F-01: Happy Path GL Extraction**
@@ -53,3 +53,8 @@ This document specifies the 10 functional test scenarios for validating end-to-e
     * **Objective**: Validate automated EOD reconciliation job execution and completeness checks.
     * **Input**: End-of-day batch extraction logs.
     * **Expected Result**: Reconciliation report generated with 0% variance status.
+
+11. **F-11: Year-End Rollover Processing**
+    * **Objective**: Validate automated balance carry-forward and opening balance generation during fiscal year closing.
+    * **Input**: Year-end closing execution trigger for General Ledger balances (SRC-001).
+    * **Expected Result**: Retained earnings accounts are correctly calculated, and opening balances for the new fiscal year are successfully established in FinSight with zero variance.
