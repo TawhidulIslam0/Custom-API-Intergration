@@ -14,3 +14,5 @@
 | M-GL-010 | BKPF-MONAT | fiscal_period | Direct mapping | 2 digits (01-16) | Route to DLQ | Fiscal period allocation |
 | M-GL-011 | BKPF-BKTXT | document_header_text | Direct mapping | Max 25 chars | Truncate | Header narrative |
 | M-GL-012 | BSEG-SGTXT | line_item_text | Direct mapping | Max 50 chars | Truncate | Line item text description |
+| M-GL-013 | BSEG-KOSTL | cost_center | Direct mapping | Max 10 chars | Route to DLQ | Cost center associated with GL posting |
+| M-GL-014 | BKPF-STGRD | reversal_reason_code | Direct mapping | Valid SAP reason code lookup | Default to NONE | Reversal indicator/reason classification |

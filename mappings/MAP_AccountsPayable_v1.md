@@ -10,3 +10,6 @@
 | M-AP-006 | BSIK-ZTERM | payment_terms | Direct mapping | Valid term lookup | Default to NET30 | Payment terms code |
 | M-AP-007 | Calculated | ageing_bucket | Date diff calculation against baseline date | Ageing category (0-30, 31-60, etc.) | Default to Current | Calculated AP ageing |
 | M-AP-008 | BSEG-ZLSCH | payment_method | Direct mapping | Single char code | Default to EFT | Payment method indicator |
+| M-AP-009 | BSEG-XBLNR | reference_document_no | Direct mapping | Max 16 chars | Truncate | External vendor reference invoice number |
+| M-AP-010 | BKPF-USNAM | created_by_user | Direct mapping | Max 12 chars | Default to SYSTEM | SAP user ID who posted the document |
+| M-AP-011 | BSEG-PRCTR | profit_center | Direct mapping | Max 10 chars | Route to DLQ | Profit center assignment for AP line item |
