@@ -1,55 +1,110 @@
 openapi: 3.0.3
+
 info:
-  title: SAP S/4HANA Source Common Schemas & Parameters
+  title: SAP S/4HANA Integration Common Components
   version: 1.0.0
-  description: Shared pagination, delta extraction parameters, and error response schemas for SAP S/4HANA integration.
+  description: >
+    Reusable OpenAPI components for the Meridian Manufacturing SAP S/4HANA
+    extraction interfaces, including authentication, pagination, ODP delta
+    extraction, rate limiting, correlation IDs, and standard error responses.
+
+servers:
+  - url: https://s4hana.meridian.internal
+    description: Meridian Manufacturing SAP S/4HANA integration gateway
+
 paths: {}
+
 components:
+
+  securitySchemes:
+
+    SAPOAuth2:
+      type: oauth2
+      description: >
+        OAuth 2.0 client credentials used by the integration middleware to
+        authenticate against the SAP extraction gateway.
+      flows:
+        clientCredentials:
+          tokenUrl: https://s4hana.meridian.internal/oauth/token
+          scopes:
+            sap:extract: Read access to approved SAP extraction interfaces
+
   parameters:
-    DeltaTokenParam:
-      name: delta-token
-      in: header
+
+    DeltaToken:
+      name: delta_token
+      in: query
       required: false
+      description: >
+        ODP delta token returned by the previous successful extraction.
+        When supplied, only changes since the supplied token are requested.
       schema:
         type: string
-      description: Odp change log delta token provided in the previous extraction response.
-    TopParam:
+        minLength: 1
+        maxLength: 500
+
+    Top:
       name: $top
       in: query
       required: false
+      description: >
+        Maximum number of records returned in one page.
       schema:
         type: integer
-        default: 1000
+        minimum: 1
         maximum: 5000
-      description: Pagination page size limit for chunked extractions.
-    SkipParam:
+        default: 1000
+
+    Skip:
       name: $skip
       in: query
       required: false
+      description: >
+        Number of records skipped for offset-based pagination fallback.
       schema:
         type: integer
+        minimum: 0
         default: 0
-      description: Number of records to skip for offset-based paging fallback.
-  responses:
-    StandardError400:
-      description: Bad Request - Invalid parameters or malformed delta token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    StandardError401:
-      description: Unauthorized - Invalid or expired SAP RFC / OAuth credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    StandardError429:
-      description: Rate Limit Exceeded - SAP RFC connection pool saturated.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+
+    CorrelationId:
+      name: X-Correlation-ID
+      in: header
+      required: false
+      description: >
+        Correlation identifier used to trace a request across SAP,
+        middleware, message broker, transformation engine, and FinSight.
+      schema:
+        type: string
+        format: uuid
+
+  headers:
+
+    RateLimit:
+      description: Maximum requests permitted in the current rate-limit window.
+      schema:
+        type: integer
+        example: 600
+
+    RateLimitRemaining:
+      description: Remaining requests in the current rate-limit window.
+      schema:
+        type: integer
+        example: 599
+
+    RateLimitReset:
+      description: Unix timestamp at which the current rate-limit window resets.
+      schema:
+        type: integer
+        example: 1787609400
+
+    CorrelationId:
+      description: Request correlation identifier.
+      schema:
+        type: string
+        format: uuid
+
   schemas:
+
     ErrorResponse:
       type: object
       required:
@@ -59,13 +114,108 @@ components:
       properties:
         error_code:
           type: string
-          example: "SAP_RFC_POOL_EXHAUSTED"
+          example: SAP_RFC_POOL_EXHAUSTED
         message:
           type: string
-          example: "Active RFC connections exceeded safety threshold of 50."
+          example: Active RFC connections exceeded the configured safety threshold.
         timestamp:
           type: string
           format: date-time
         correlation_id:
           type: string
           format: uuid
+        details:
+          type: object
+          additionalProperties: true
+
+    DeltaResponse:
+      type: object
+      required:
+        - records
+        - delta_token
+        - has_more
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+        delta_token:
+          type: string
+          example: 20260824_000001
+        has_more:
+          type: boolean
+          example: false
+        next_skip:
+          type: integer
+          minimum: 0
+          example: 1000
+
+  responses:
+
+    BadRequest:
+      description: Request parameters are invalid.
+      headers:
+        X-Correlation-ID:
+          $ref: '#/components/headers/CorrelationId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error_code: INVALID_REQUEST
+            message: One or more request parameters are invalid.
+            timestamp: '2026-08-24T12:00:00Z'
+
+    Unauthorized:
+      description: Authentication credentials are missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error_code: UNAUTHORIZED
+            message: Authentication credentials are invalid or expired.
+            timestamp: '2026-08-24T12:00:00Z'
+
+    Forbidden:
+      description: Authenticated caller does not have the required scope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error_code: FORBIDDEN
+            message: Caller does not have the sap:extract scope.
+            timestamp: '2026-08-24T12:00:00Z'
+
+    RateLimited:
+      description: SAP extraction rate limit has been exceeded.
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimitRemaining'
+        X-RateLimit-Reset:
+          $ref: '#/components/headers/RateLimitReset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error_code: RATE_LIMITED
+            message: SAP extraction rate limit exceeded.
+            timestamp: '2026-08-24T12:00:00Z'
+
+    ServerError:
+      description: Unexpected SAP or integration gateway error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    ServiceUnavailable:
+      description: SAP extraction service is temporarily unavailable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

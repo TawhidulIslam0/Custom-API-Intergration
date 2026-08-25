@@ -1,90 +1,372 @@
 openapi: 3.0.3
+
 info:
-  title: Zetheta FinSight Destination Endpoints - Part 2 (Operations, Assets & Security)
+  title: Zetheta FinSight Destination Operations APIs
   version: 1.0.0
-  description: Ingestion API specification for FinSight operational endpoints (DST-007 to DST-012), OAuth 2.0 flows, and webhook callbacks.
+  description: >
+    DST-007 through DST-012 ingestion APIs covering Purchase Orders,
+    Sales Orders, Fixed Assets, Bank Statements, Budget versus Actual,
+    and Inventory.
+
 servers:
   - url: https://api.finsight.zetheta.cloud/v1
     description: Zetheta FinSight Production Ingestion Gateway
+
+security:
+  - OAuth2:
+      - finsight:ingest
+
 paths:
+
   /DST-007/purchase-orders:
     post:
-      summary: DST-007 - Ingest Purchase Orders & GR/IR Data
-      description: Receives PO commitments and goods receipt tracking records.
-      security:
-        - OAuth2: [finsight:ingest]
+      operationId: ingestPurchaseOrders
+      summary: DST-007 - Ingest Purchase Orders and GR/IR
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBatchRequest'
       responses:
         '202':
-          description: PO batch accepted
+          $ref: '#/components/responses/Accepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/DuplicateEntry'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /DST-008/sales-orders:
     post:
-      summary: DST-008 - Ingest Sales Orders & Revenue Data
-      description: Ingests billing and order intake details.
-      security:
-        - OAuth2: [finsight:ingest]
+      operationId: ingestSalesOrders
+      summary: DST-008 - Ingest Sales Orders and Revenue Data
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBatchRequest'
       responses:
         '202':
-          description: SO batch accepted
+          $ref: '#/components/responses/Accepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/DuplicateEntry'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /DST-009/fixed-assets:
     post:
-      summary: DST-009 - Ingest Fixed Asset Registers & Depreciation
-      description: Ingests asset capitalizations and monthly depreciation postings.
+      operationId: ingestFixedAssets
+      summary: DST-009 - Ingest Fixed Assets and Depreciation
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBatchRequest'
       responses:
         '202':
-          description: Fixed Assets batch accepted
+          $ref: '#/components/responses/Accepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/DuplicateEntry'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /DST-010/bank-statements:
     post:
-      summary: DST-010 - Ingest Electronic Bank Statements & Reconciliation
-      description: Ingests cleared cash line items and lockbox receipts.
+      operationId: ingestBankStatements
+      summary: DST-010 - Ingest Bank Statements
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBatchRequest'
       responses:
         '202':
-          description: Bank Statements batch accepted
+          $ref: '#/components/responses/Accepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/DuplicateEntry'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /DST-011/budget-actual:
     post:
-      summary: DST-011 - Ingest Budget vs Actual Controlling Metrics
-      description: Ingests cost center budget variances and forecast versions.
+      operationId: ingestBudgetActual
+      summary: DST-011 - Ingest Budget versus Actual
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBatchRequest'
       responses:
         '202':
-          description: Budget vs Actual batch accepted
+          $ref: '#/components/responses/Accepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/DuplicateEntry'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   /DST-012/inventory:
     post:
-      summary: DST-012 - Ingest Inventory Valuation & Stock Movements
-      description: Ingests material stock balances and revaluation adjustments.
+      operationId: ingestInventory
+      summary: DST-012 - Ingest Inventory Valuation and Stock Movements
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBatchRequest'
       responses:
         '202':
-          description: Inventory batch accepted
+          $ref: '#/components/responses/Accepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/DuplicateEntry'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 
 components:
+
   securitySchemes:
-  OAuth2:
-    type: oauth2
-    description: OAuth 2.0 Client Credentials Grant with automated token rotation.
-    flows:
-      clientCredentials:
-        tokenUrl: https://auth.finsight.zetheta.cloud/oauth/token
-        scopes:
-          finsight:ingest: Grants write permissions for ERP ingestion pipelines.
-          finsight:read: Grants read permissions for verification and status checks.
-  callbacks:
-    IngestionWebhookCallback:
-      '{$request.body#/webhook_url}':
-        post:
-          summary: Asynchronous Ingestion Status Callback
-          description: FinSight calls this webhook to report batch success, failure, or validation warnings.
-          requestBody:
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    batch_id:
-                      type: string
-                      format: uuid
-                    status:
-                      type: string
-                      enum: [SUCCESS, FAILED, PARTIAL]
-                    error_details:
-                      type: string
-          responses:
-            '200':
-              description: Callback received successfully
+
+    OAuth2:
+      type: oauth2
+      description: >
+        OAuth 2.0 Client Credentials Grant used by the middleware
+        transformation and loading service.
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.finsight.zetheta.cloud/oauth/token
+          scopes:
+            finsight:ingest: Submit transformed ERP records
+            finsight:read: Read ingestion status
+
+  parameters:
+
+    IdempotencyKey:
+      name: X-Idempotency-Key
+      in: header
+      required: true
+      description: >
+        Unique UUID used to prevent duplicate batch processing.
+      schema:
+        type: string
+        format: uuid
+
+    CorrelationId:
+      name: X-Correlation-ID
+      in: header
+      required: false
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+
+    GenericBatchRequest:
+      type: object
+      required:
+        - batch_id
+        - records
+      properties:
+        batch_id:
+          type: string
+          format: uuid
+        records:
+          type: array
+          minItems: 1
+          maxItems: 5000
+          items:
+            type: object
+            additionalProperties: true
+        webhook_url:
+          type: string
+          format: uri
+          description: Optional callback endpoint for asynchronous processing status.
+
+    AcceptedResponse:
+      type: object
+      required:
+        - status
+        - tracking_id
+      properties:
+        status:
+          type: string
+          enum:
+            - ACCEPTED
+        tracking_id:
+          type: string
+          format: uuid
+        batch_id:
+          type: string
+          format: uuid
+
+    ErrorResponse:
+      type: object
+      required:
+        - error_code
+        - message
+        - timestamp
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        correlation_id:
+          type: string
+          format: uuid
+        details:
+          type: object
+          additionalProperties: true
+
+  responses:
+
+    Accepted:
+      description: Batch accepted for asynchronous processing.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AcceptedResponse'
+
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Authentication failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Forbidden:
+      description: Insufficient OAuth permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    DuplicateEntry:
+      description: Duplicate business key or idempotency key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    ValidationError:
+      description: Data validation failure.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    RateLimited:
+      description: FinSight rate limit exceeded.
+      headers:
+        X-RateLimit-Limit:
+          schema:
+            type: integer
+            example: 600
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+            example: 0
+        X-RateLimit-Reset:
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    InternalServerError:
+      description: Unexpected FinSight error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

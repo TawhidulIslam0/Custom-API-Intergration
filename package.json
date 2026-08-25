@@ -16,10 +16,13 @@
     }
   },
   "devDependencies": {
+    "@stoplight/spectral-cli": "^6.16.3",
     "nodemon": "^3.1.14"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node scripts/test-fiscal-mapping.js && node scripts/test-malformed-batch.js && node scripts/test-metrics.js && node scripts/test-reconciliation.js && node scripts/test-resilience.js",
+    "smoke": "node scripts/smoke-test.js",
+    "pipeline": "node scripts/run-pipeline.js"
   },
   "dependencies": {
     "axios": "^1.19.0",

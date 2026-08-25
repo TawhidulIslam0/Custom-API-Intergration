@@ -1,57 +1,364 @@
 openapi: 3.0.3
+
 info:
-  title: SAP S/4HANA Source Endpoints - Part 2 (Operations & Assets)
+  title: SAP S/4HANA Operations and Assets Source API
   version: 1.0.0
-  description: OpenAPI specification for SAP S/4HANA extraction endpoints for operational and asset domains (SRC-007 to SRC-012).
+  description: >
+    SRC-007 through SRC-012 SAP S/4HANA extraction interfaces covering
+    Purchase Orders, Sales Orders, Fixed Assets, Bank Statements,
+    Budget versus Actual, and Inventory.
+  contact:
+    name: Zetheta FDE Integration Team
+    email: integration@zetheta.example
+
 servers:
-  - url: https://s4hana.meridian.internal/sap/bc/srt/rfc/sap
-    description: Meridian Manufacturing SAP S/4HANA Production Gateway
+  - url: https://s4hana.meridian.internal
+    description: Meridian Manufacturing SAP S/4HANA integration gateway
+
+security:
+  - SAPOAuth2:
+      - sap:extract
+
+tags:
+  - name: Purchase Orders
+    description: Purchase order and goods receipt/invoice receipt extraction.
+  - name: Sales Orders
+    description: Sales order and revenue-related extraction.
+  - name: Fixed Assets
+    description: Fixed asset master and depreciation extraction.
+  - name: Bank Statements
+    description: Electronic bank statement and cash reconciliation extraction.
+  - name: Budget and Actual
+    description: Budget, actual, forecast, and controlling extraction.
+  - name: Inventory
+    description: Inventory valuation and stock movement extraction.
+
 paths:
-  /SRC-007/purchase-orders:
+
+  /sap/opu/odata/sap/API_PURCHASEORDER_2/PurchaseOrders:
     get:
-      summary: SRC-007 - Purchase Orders & GR/IR Tracking
-      description: Extracts purchase order header and item details via CDS view I_PurchaseOrderAPI01.
+      tags:
+        - Purchase Orders
+      operationId: extractPurchaseOrders
+      summary: SRC-007 - Purchase Orders and GR/IR
+      description: >
+        Extracts purchase order headers, items, commitments and GR/IR
+        reconciliation attributes.
       parameters:
-        - name: delta_token
-          in: query
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Purchase Order extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /sap/opu/odata/sap/API_SALES_ORDER_SRV/A_SalesOrder:
+    get:
+      tags:
+        - Sales Orders
+      operationId: extractSalesOrders
+      summary: SRC-008 - Sales Orders
+      description: >
+        Extracts sales order headers, items, schedule lines and
+        revenue-recognition related attributes.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Sales Order extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /sap/opu/odata/sap/API_FIXEDASSET_SRV/FixedAssets:
+    get:
+      tags:
+        - Fixed Assets
+      operationId: extractFixedAssets
+      summary: SRC-009 - Fixed Assets and Depreciation
+      description: >
+        Extracts fixed asset master records, depreciation areas,
+        capitalization values and depreciation postings.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Fixed Asset extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /sap/opu/odata/sap/API_BANK_STATEMENT_SRV/BankStatements:
+    get:
+      tags:
+        - Bank Statements
+      operationId: extractBankStatements
+      summary: SRC-010 - Bank Statements
+      description: >
+        Extracts electronic bank statement headers and line items
+        for cash reconciliation.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Bank Statement extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /sap/opu/odata/sap/API_BUDGET_ACTUAL_SRV/BudgetActuals:
+    get:
+      tags:
+        - Budget and Actual
+      operationId: extractBudgetActual
+      summary: SRC-011 - Budget versus Actual
+      description: >
+        Extracts budget allocations, actual postings, forecast versions,
+        cost centres and fiscal-period values.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Budget versus Actual extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /sap/opu/odata/sap/API_INVENTORY_SRV/Inventory:
+    get:
+      tags:
+        - Inventory
+      operationId: extractInventory
+      summary: SRC-012 - Inventory Valuation and Stock Movements
+      description: >
+        Extracts inventory quantities, valuation records, stock movements
+        and revaluation adjustments.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Inventory extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+
+  securitySchemes:
+
+    SAPOAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials for SAP extraction.
+      flows:
+        clientCredentials:
+          tokenUrl: https://s4hana.meridian.internal/oauth/token
+          scopes:
+            sap:extract: Read SAP integration data
+
+  parameters:
+
+    DeltaToken:
+      name: delta_token
+      in: query
+      required: false
+      description: ODP delta token from the previous successful extraction.
+      schema:
+        type: string
+
+    Top:
+      name: $top
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+        default: 1000
+
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+
+    CorrelationId:
+      name: X-Correlation-ID
+      in: header
+      required: false
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+
+    ExtractionResponse:
+      type: object
+      required:
+        - records
+        - delta_token
+        - has_more
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        delta_token:
+          type: string
+        has_more:
+          type: boolean
+        next_skip:
+          type: integer
+          minimum: 0
+
+    ErrorResponse:
+      type: object
+      required:
+        - error_code
+        - message
+        - timestamp
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        correlation_id:
+          type: string
+          format: uuid
+
+  responses:
+
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
           schema:
-            type: string
-          description: Change log token for delta extraction
-      responses:
-        '200':
-          description: Successful Purchase Order extraction
-  /SRC-008/sales-orders:
-    get:
-      summary: SRC-008 - Sales Orders & Revenue Recognition
-      description: Extracts sales order schedule lines and billing blocks via CDS view I_SalesDocument.
-      responses:
-        '200':
-          description: Successful Sales Order extraction
-  /SRC-009/fixed-assets:
-    get:
-      summary: SRC-009 - Fixed Assets Master & Depreciation
-      description: Extracts asset values, depreciation areas, and master records via table ANLA/ANLC.
-      responses:
-        '200':
-          description: Successful Fixed Assets extraction
-  /SRC-010/bank-statements:
-    get:
-      summary: SRC-010 - Bank Statements & Electronic Payments
-      description: Extracts electronic bank statement line items via FEBKO/FECL tables.
-      responses:
-        '200':
-          description: Successful Bank Statements extraction
-  /SRC-011/budget-actual:
-    get:
-      summary: SRC-011 - Budget vs Actual Cost Controlling
-      description: Extracts budget allocations and actual postings via table COSP/COSS.
-      responses:
-        '200':
-          description: Successful Budget vs Actual extraction
-  /SRC-012/inventory:
-    get:
-      summary: SRC-012 - Inventory Valuations & Material Movements
-      description: Extracts material stock quantities and valuation data via table MBEW/MSEG.
-      responses:
-        '200':
-          description: Successful Inventory extraction
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Authentication failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Forbidden:
+      description: Insufficient permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    RateLimited:
+      description: SAP rate limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    ServerError:
+      description: SAP server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    ServiceUnavailable:
+      description: SAP service temporarily unavailable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/responses/ServiceUnavailable'

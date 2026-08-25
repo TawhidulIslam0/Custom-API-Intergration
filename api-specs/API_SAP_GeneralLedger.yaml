@@ -1,83 +1,440 @@
 openapi: 3.0.3
+
 info:
-  title: SAP S/4HANA Source Endpoints - Part 1 (Financials & Controlling)
+  title: SAP S/4HANA General Ledger Source API
   version: 1.0.0
-  description: OpenAPI specification for SAP S/4HANA ODP/CDS extraction endpoints (SRC-001 to SRC-006).
+  description: >
+    SRC-001 through SRC-006 SAP S/4HANA extraction interfaces covering
+    General Ledger, Accounts Payable, Accounts Receivable, Cost Centre,
+    Profit Centre, and Material Ledger domains.
+  contact:
+    name: Zetheta FDE Integration Team
+    email: integration@zetheta.example
+
 servers:
-  - url: https://s4hana.meridian.internal/sap/bc/srt/rfc/sap
-    description: Meridian Manufacturing SAP S/4HANA Production Gateway
+  - url: https://s4hana.meridian.internal
+    description: Meridian Manufacturing SAP S/4HANA integration gateway
+
+security:
+  - SAPOAuth2:
+      - sap:extract
+
+tags:
+  - name: General Ledger
+    description: General Ledger journal entry extraction.
+  - name: Accounts Payable
+    description: Accounts Payable subledger extraction.
+  - name: Accounts Receivable
+    description: Accounts Receivable subledger extraction.
+  - name: Cost Centre
+    description: Cost Centre master and hierarchy extraction.
+  - name: Profit Centre
+    description: Profit Centre master and segment extraction.
+  - name: Material Ledger
+    description: Material Ledger valuation extraction.
+
 paths:
-  /SRC-001/journal-entries:
+
+  /sap/opu/odata/sap/API_JOURNALENTRYITEM_SRV/JournalEntryItems:
     get:
+      tags:
+        - General Ledger
+      operationId: extractGeneralLedger
       summary: SRC-001 - General Ledger Journal Entry Items
-      description: Extracts GL line items via ODP CDS View I_OperationalAcctgDocItem with delta token support.
+      description: >
+        Extracts GL journal entry items using the SAP operational accounting
+        document item interface. Supports ODP-style delta extraction and
+        pagination.
       parameters:
-        - name: delta_token
-          in: query
-          schema:
-            type: string
-          description: ODP change log token for delta extraction
-        - name: $top
-          in: query
-          schema:
-            type: integer
-            default: 1000
-          description: Pagination page size limit
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
       responses:
         '200':
-          description: Successful extraction of GL line items
+          description: GL extraction successful.
+          headers:
+            X-Correlation-ID:
+              $ref: '#/components/headers/CorrelationId'
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  delta_token:
-                    type: string
-                  records:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        CompanyCode:
-                          type: string
-                        FiscalYear:
-                          type: string
-                        AccountingDocument:
-                          type: string
-                        AmountInLocalCurrency:
-                          type: number
-  /SRC-002/ap-subledger:
+                $ref: '#/components/schemas/GLExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /sap/opu/odata/sap/API_AP_DOCUMENT_SRV/APDocumentItems:
     get:
+      tags:
+        - Accounts Payable
+      operationId: extractAccountsPayable
       summary: SRC-002 - Accounts Payable Line Items
-      description: Extracts vendor open and cleared items via CDS view I_APDocumentItem.
+      description: >
+        Extracts vendor open and cleared AP line items.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
       responses:
         '200':
-          description: Successful AP extraction
-  /SRC-003/ar-subledger:
+          description: AP extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /sap/opu/odata/sap/API_AR_DOCUMENT_SRV/ARDocumentItems:
     get:
+      tags:
+        - Accounts Receivable
+      operationId: extractAccountsReceivable
       summary: SRC-003 - Accounts Receivable Line Items
-      description: Extracts customer billing and payment items via CDS view I_ARDocumentItem.
+      description: >
+        Extracts customer billing, open-item, and payment records.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
       responses:
         '200':
-          description: Successful AR extraction
-  /SRC-004/cost-centres:
+          description: AR extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /sap/opu/odata/sap/API_COST_CENTER_SRV/CostCentres:
     get:
-      summary: SRC-004 - Cost Centre Master & Hierarchy
-      description: Extracts cost centre master data and hierarchy groups via table CSKS.
+      tags:
+        - Cost Centre
+      operationId: extractCostCentres
+      summary: SRC-004 - Cost Centre Master and Hierarchy
+      description: >
+        Extracts cost centre master records and hierarchy assignments.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
       responses:
         '200':
-          description: Successful Cost Centre extraction
-  /SRC-005/profit-centres:
+          description: Cost Centre extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /sap/opu/odata/sap/API_PROFIT_CENTER_SRV/ProfitCentres:
     get:
-      summary: SRC-005 - Profit Centre Master & Segment Alignment
-      description: Extracts profit centre master data via table CEPC.
+      tags:
+        - Profit Centre
+      operationId: extractProfitCentres
+      summary: SRC-005 - Profit Centre Master
+      description: >
+        Extracts profit centre master data and segment reporting attributes.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
       responses:
         '200':
-          description: Successful Profit Centre extraction
-  /SRC-006/material-ledger:
+          description: Profit Centre extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /sap/opu/odata/sap/API_MATERIAL_LEDGER_SRV/MaterialLedger:
     get:
-      summary: SRC-006 - Material Ledger Periodic Valuation
-      description: Extracts actual costing and price difference allocations via table MLIT/MLPP.
+      tags:
+        - Material Ledger
+      operationId: extractMaterialLedger
+      summary: SRC-006 - Material Ledger Valuation
+      description: >
+        Extracts actual costing layers, periodic valuation, and price
+        difference allocation data.
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/Top'
+        - $ref: '#/components/parameters/Skip'
+        - $ref: '#/components/parameters/CorrelationId'
       responses:
         '200':
-          description: Successful Material Ledger extraction
+          description: Material Ledger extraction successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericExtractionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+
+  securitySchemes:
+
+    SAPOAuth2:
+      type: oauth2
+      description: OAuth 2.0 client credentials for SAP extraction.
+      flows:
+        clientCredentials:
+          tokenUrl: https://s4hana.meridian.internal/oauth/token
+          scopes:
+            sap:extract: Read SAP integration data
+
+  parameters:
+
+    DeltaToken:
+      name: delta_token
+      in: query
+      required: false
+      description: ODP delta token from the previous extraction.
+      schema:
+        type: string
+
+    Top:
+      name: $top
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 5000
+        default: 1000
+
+    Skip:
+      name: $skip
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+
+    CorrelationId:
+      name: X-Correlation-ID
+      in: header
+      required: false
+      schema:
+        type: string
+        format: uuid
+
+  headers:
+
+    CorrelationId:
+      description: Request correlation identifier.
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+
+    GLRecord:
+      type: object
+      required:
+        - CompanyCode
+        - FiscalYear
+        - AccountingDocument
+        - AmountInLocalCurrency
+      properties:
+        CompanyCode:
+          type: string
+          example: MC01
+        FiscalYear:
+          type: string
+          example: '2026'
+        AccountingDocument:
+          type: string
+          example: '5000000000'
+        AmountInLocalCurrency:
+          type: number
+          format: double
+          example: 15000.25
+        Currency:
+          type: string
+          example: INR
+        PostingDate:
+          type: string
+          format: date
+          example: '2026-03-15'
+        DocumentDate:
+          type: string
+          format: date
+          example: '2026-03-14'
+        CostCentre:
+          type: string
+          example: '1000100'
+        ProfitCentre:
+          type: string
+          example: '10001000'
+        DebitCreditIndicator:
+          type: string
+          enum:
+            - S
+            - H
+
+    GLExtractionResponse:
+      type: object
+      required:
+        - records
+        - delta_token
+        - has_more
+      properties:
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/GLRecord'
+        delta_token:
+          type: string
+          example: 20260824_000001
+        has_more:
+          type: boolean
+          example: false
+        next_skip:
+          type: integer
+          example: 1000
+
+    GenericExtractionResponse:
+      type: object
+      required:
+        - records
+        - delta_token
+        - has_more
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        delta_token:
+          type: string
+        has_more:
+          type: boolean
+        next_skip:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      required:
+        - error_code
+        - message
+        - timestamp
+      properties:
+        error_code:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        correlation_id:
+          type: string
+          format: uuid
+
+  responses:
+
+    BadRequest:
+      description: Invalid extraction request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: Authentication failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Forbidden:
+      description: Insufficient permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    RateLimited:
+      description: Rate limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    ServerError:
+      description: SAP server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    ServiceUnavailable:
+      description: SAP service temporarily unavailable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
