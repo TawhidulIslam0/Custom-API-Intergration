@@ -1,6 +1,3 @@
-# Sequence Diagram 4 — OAuth 2.0 Client Credentials Flow
-
-```mermaid
 sequenceDiagram
     participant TE as Integration Platform
     participant Auth as FinSight Auth Server
@@ -19,4 +16,3 @@ sequenceDiagram
     TE->>Auth: POST /oauth/token (refresh)
     Auth-->>TE: 200 OK { new access_token }
     TE->>TE: Replace cached token
-```

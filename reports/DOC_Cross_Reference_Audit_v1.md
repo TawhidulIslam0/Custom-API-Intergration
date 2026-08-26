@@ -13,7 +13,7 @@ This audit report verifies architectural, API, error handling, monitoring, and t
    * Zero linting errors confirmed via Spectral OpenAPI reports (`reports/DOC_Spectral_Lint_Report_v1.md`).
 
 3. **Error Handling & Resilience**:
-   * Error taxonomies (`errors/ERR_Taxonomy_v1.md`), circuit breakers (`resilience/DOC_Circuit_Breaker_v1.md`), and DLQ architectures are consistently integrated into the reconciliation and testing scenarios (`docs/integration-testing-plan.md`).
+   * Error taxonomies (`errors/ERR_Taxonomy_v1.md`), circuit breakers (`resilience/DOC_Circuit_Breaker_v1.md`), and DLQ architectures are consistently integrated into the reconciliation and testing scenarios (`docs/D7_Integration_Testing_Plan_v1.md`).
 
 4. **Monitoring & Alerting Consistency**:
    * 12 Grafana panels and P1-P4 alerting rules align with the post-deployment verification checks (`deployment/D8_Post_Deployment_Verification_v1.md`).

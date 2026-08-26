@@ -1,6 +1,3 @@
-# Sequence Diagram 1 — Happy Path End-to-End Sync
-
-```mermaid
 sequenceDiagram
     participant S as Scheduler
     participant GW as API Gateway
@@ -19,4 +16,3 @@ sequenceDiagram
     FS-->>TE: 201 Created
     TE->>K: Publish success event
     Note over TE,FS: Reconciliation runs after batch completes
-```
