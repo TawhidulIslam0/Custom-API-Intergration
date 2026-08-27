@@ -1,37 +1,145 @@
+
+---
+
+# 5. `testing/TST_Traceability_Matrix_v1.md`
+
+This one is particularly important. Replace the entire file:
+
+```markdown
 # Requirements Traceability Matrix
 
-## Overview
-This matrix maps all 30 integration test scenarios (Functional, Non-Functional, Failure Injection, Security, and Reconciliation) back to their respective technical and functional design requirements.
+**Project:** FDE-9B Integration  
+**Version:** 1.1  
+**Status:** Final
 
-| Test ID | Test Scenario Name | Requirement Category | Target Specification / System Component |
-| :--- | :--- | :--- | :--- |
-| **F-01** | Happy Path GL Extraction | Functional | SAP S/4HANA ODP Source (SRC-001) / FinSight GL Destination (DST-001) |
-| **F-02** | Accounts Payable Sync | Functional | AP Invoice Extraction (SRC-002) / Ageing Calculation Logic |
-| **F-03** | Master Data Delta Processing | Functional | Profit & Cost Center Delta Extraction (SRC-003) |
-| **F-04** | Multi-Company Code Handling | Functional | Company Code Routing & Currency Mapping |
-| **F-05** | Fiscal Period Mapping | Functional | Fiscal Period Logic (Periods 13–16) |
-| **F-06** | Hierarchy Flattening | Functional | Cost Center Group Hierarchy Flattening (SRC-004) |
-| **F-07** | Procure-to-Pay (P2P) Flow | Functional | PO & GR/IR Reconciliation Engine (SRC-005) |
-| **F-08** | Bank Statement Normalization | Functional | Multicash/BAI2 Statement Normalization (SRC-006) |
-| **F-09** | Budget vs. Actuals Aggregation | Functional | Controlling Budget vs. Actuals Analytics Mapping |
-| **F-10** | End-of-Day Reconciliation | Functional | Automated EOD Reconciliation Job (RECO-001) |
-| **F-11** | Year-End Rollover Processing | Functional | Fiscal Year Closing & Opening Balance Carry-Forward |
-| **NF-01** | Peak Load Ingestion | Non-Functional | Pipeline Throughput (500 RPS) & Latency Thresholds |
-| **NF-02** | Concurrent Extraction | Non-Functional | Multi-domain Batch Extraction & Database Connection Pools |
-| **NF-03** | API Latency Verification | Non-Functional | Destination API p99 Latency SLA (< 1500ms) |
-| **NF-04** | Volume Scalability | Non-Functional | Kubernetes HPA & Dynamic Worker Scaling |
-| **NF-05** | 24-Hour Endurance Test | Non-Functional | Memory Leak Prevention & System Stability |
-| **NF-06** | Cold-Start Container Scaling | Non-Functional | Kubernetes Pod Autoscaling & Zero-Scale Provisioning |
-| **FI-01** | SAP Connection Failure | Resilience / Failure | Exponential Backoff Retry & Circuit Breaker State Machine |
-| **FI-02** | API Throttling (HTTP 429) | Resilience / Failure | Rate Limiting & `Retry-After` Header Handling |
-| **FI-03** | Kafka Broker Failure | Resilience / Failure | Message Broker Partition Reassignment & Leader Election |
-| **FI-04** | Malformed Data Payload | Resilience / Failure | Data Quality Validation Engine & DLQ Routing |
-| **FI-05** | Network Partition (Split-Brain)| Resilience / Failure | Microservice Cluster Isolation & Safe Queueing |
-| **FI-06** | Database Deadlock & Retry Recovery | Resilience / Failure | SQL Deadlock Exception Handling & Transaction Rollback |
-| **SEC-01** | Token Expiry and Refresh | Security | OAuth 2.0 Client Credentials & Token Caching Mechanism |
-| **SEC-02** | Unauthorized Access Block | Security | API Gateway Authorization & Scope Validation |
-| **SEC-03** | Encryption Verification | Security | Transport Layer Security (TLS 1.3) & AES-256 Storage |
-| **SEC-04** | API Rate Limiting & DDoS Defense | Security | API Gateway IP Throttling & DDoS Protection |
-| **REC-01** | Financial Variance Detection | Reconciliation | Automated Reconciliation Rules & Tolerance Thresholds |
-| **REC-02** | Completeness Check | Reconciliation | Batch Line Item Record Count Verification |
-| **REC-03** | Cross-Currency FX Rate Discrepancy | Reconciliation | FX Rate Tolerance Rules & Discrepancy Routing |
+---
+
+## 1. Purpose
+
+This matrix provides traceability between the integration requirements and
+the complete testing inventory.
+
+The testing framework contains **36 scenarios** across functional,
+non-functional, failure, security, reconciliation, and operational
+categories.
+
+---
+
+## 2. Traceability Matrix
+
+| ID | Scenario | Category | Requirement / Coverage |
+|---|---|---|---|
+| F-01 | Happy Path Extraction | Functional | SAP → Middleware → FinSight |
+| F-02 | AP Synchronization | Functional | SRC-002 / DST-002 |
+| F-03 | AR Synchronization | Functional | SRC-003 / DST-003 |
+| F-04 | Master Data Delta | Functional | SRC-004 / SRC-005 |
+| F-05 | Multi-Company Code | Functional | Company-code isolation |
+| F-06 | Fiscal Period Processing | Functional | Fiscal periods 01–16 |
+| F-07 | Hierarchy Flattening | Functional | Cost Centre hierarchy |
+| F-08 | Procure-to-Pay | Functional | SRC-007 / DST-007 |
+| F-09 | Bank Statement Normalization | Functional | SRC-010 / DST-010 |
+| F-10 | Budget vs Actual | Functional | SRC-011 / reconciliation |
+| NF-01 | Peak Load Ingestion | Non-Functional | ≥500 records/minute |
+| NF-02 | Concurrent Extraction | Non-Functional | Concurrent processing/scalability |
+| NF-03 | API Latency | Non-Functional | Average <500ms |
+| NF-04 | Volume Scalability | Non-Functional | >100,000 records/day |
+| NF-05 | 24-Hour Endurance | Non-Functional | Long-duration stability |
+| FI-01 | SAP Connection Failure | Failure | Retry + circuit breaker |
+| FI-02 | API Throttling | Failure | HTTP 429 + Retry-After |
+| FI-03 | Kafka Broker Failure | Failure | Broker resilience |
+| FI-04 | Malformed Payload | Failure | Data quality + DLQ |
+| FI-05 | Network Partition | Failure | Fault tolerance |
+| FI-06 | Database Deadlock | Failure | Rollback + retry |
+| SEC-01 | Token Expiry | Security | OAuth token lifecycle |
+| SEC-02 | Unauthorized Access | Security | Authentication/authorization |
+| SEC-03 | Encryption Verification | Security | TLS/secrets protection |
+| SEC-04 | API Rate Limiting | Security | Abuse protection |
+| REC-01 | Financial Variance | Reconciliation | Accuracy |
+| REC-02 | Completeness Check | Reconciliation | Record counts |
+| REC-03 | FX Discrepancy | Reconciliation | Currency tolerance |
+| OPS-01 | Health Verification | Operational | Service health |
+| OPS-02 | DLQ Monitoring | Operational | DLQ observability |
+| OPS-03 | Alert Escalation | Operational | P1–P4 alerting |
+| OPS-04 | Rollback Verification | Operational | Recovery |
+| OPS-05 | Post-Deployment Validation | Operational | Production readiness |
+| OPS-06 | Logging Verification | Operational | Structured telemetry |
+| OPS-07 | Kafka Consumer Lag | Operational | Streaming monitoring |
+| OPS-08 | Reconciliation Report Generation | Operational | Audit/reporting |
+
+---
+
+## 3. Requirements Coverage
+
+### Performance
+
+| Requirement | Test |
+|---|---|
+| ≥500 records/minute | NF-01 |
+| Average API latency <500ms | NF-03 |
+| >100,000 records/day | NF-04 |
+| 24-hour endurance | NF-05 |
+
+### Scalability
+
+| Requirement | Test |
+|---|---|
+| Concurrent processing | NF-02 |
+| Horizontal scaling behavior | NF-02 / NF-04 |
+| Kafka consumer lag | NF-02 / OPS-07 |
+
+### Security
+
+| Requirement | Test |
+|---|---|
+| OAuth authentication | SEC-01 |
+| Unauthorized access rejection | SEC-02 |
+| Encryption | SEC-03 |
+| Rate limiting | SEC-04 |
+
+### Reliability
+
+| Requirement | Test |
+|---|---|
+| Retry behavior | FI-01 / FI-02 / FI-06 |
+| Circuit breaker | FI-01 / FI-05 |
+| DLQ routing | FI-04 / OPS-02 |
+| Kafka resilience | FI-03 |
+| Network recovery | FI-05 |
+
+### Reconciliation
+
+| Requirement | Test |
+|---|---|
+| Accuracy | REC-01 |
+| Completeness | REC-02 |
+| Currency tolerance | REC-03 |
+| Reconciliation reporting | OPS-08 |
+
+### Deployment & Operations
+
+| Requirement | Test |
+|---|---|
+| Service health | OPS-01 |
+| DLQ monitoring | OPS-02 |
+| Alert escalation | OPS-03 |
+| Rollback | OPS-04 |
+| Post-deployment validation | OPS-05 |
+| Structured logging | OPS-06 |
+| Kafka monitoring | OPS-07 |
+| Reconciliation reporting | OPS-08 |
+
+---
+
+## 4. Test Inventory
+
+| Category | Count |
+|---|---:|
+| Functional | 10 |
+| Non-Functional | 5 |
+| Failure Injection | 6 |
+| Security | 4 |
+| Reconciliation | 3 |
+| Operational | 8 |
+| **TOTAL** | **36** |
+
+**Total Test Scenarios: 36**

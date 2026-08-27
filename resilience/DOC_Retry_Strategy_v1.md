@@ -1,11 +1,47 @@
-# Retry Strategy Specification
 
-## 1. Exponential Backoff Formula with Jitter
-To prevent thundering herd problems and downstream system congestion during outages, we implement an exponential backoff formula with full jitter:
+---
 
-$$wait = \min(cap, \text{random}(base, base \times 2^{attempt}))$$
+# 7. `resilience/DOC_Retry_Strategy_v1.md`
 
-* **Base**: Initial wait time (e.g., 1000ms = 1 second)
-* **Cap**: Maximum wait time ceiling (e.g., 60000ms = 60 seconds)
-* **Attempt**: Current retry iteration index (1-based)
-* **Jitter**: Randomization factor between the base and exponential ceiling to decorrelate concurrent retries.
+Replace the entire file:
+
+```markdown
+# Retry Strategy
+
+**Project:** FDE-9B Integration  
+**Version:** 1.1  
+**Status:** Final
+
+---
+
+## 1. Purpose
+
+The retry framework protects the integration pipeline against transient
+failures while preventing uncontrolled retry storms.
+
+Retries are used only when the failure is considered recoverable.
+
+---
+
+## 2. Maximum Attempts
+
+The integration performs a maximum of **3 total attempts** for a
+retryable transaction.
+
+```text
+Attempt 1
+   ↓
+Failure
+   ↓
+Backoff
+   ↓
+Attempt 2
+   ↓
+Failure
+   ↓
+Backoff
+   ↓
+Attempt 3
+   ↓
+Success → Continue
+Failure → DLQ / Failure Handling

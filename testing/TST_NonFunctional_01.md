@@ -1,35 +1,37 @@
-# Non-Functional Test Scenarios (Scenarios NF-01 to NF-06)
+
+---
+
+# 2. `testing/TST_NonFunctional_01.md`
+
+Replace the entire file with:
+
+```markdown
+# Non-Functional Test Scenarios
+
+**Project:** FDE-9B Integration  
+**Version:** 1.1  
+**Status:** Final
+
+---
 
 ## Overview
-This document specifies the 6 non-functional test scenarios evaluating system performance, scalability, latency, and endurance.
 
-## Scenarios
-1. **NF-01: Peak Load Ingestion**
-   * **Objective**: Evaluate pipeline stability under peak transaction volume (500 RPS).
-   * **Input**: Simulated high-throughput ODP delta stream.
-   * **Expected Result**: System processes load without exceeding 3000ms p95 latency.
+This document defines the non-functional testing strategy for performance,
+latency, scalability, concurrency, and endurance.
 
-2. **NF-02: Concurrent Extraction**
-   * **Objective**: Test simultaneous multi-domain batch extractions from SAP S/4HANA.
-   * **Input**: Parallel extraction jobs for GL, AP, AR, and Assets.
-   * **Expected Result**: No database deadlocks or connection pool exhaustion.
+The suite contains **5 scenarios (NF-01 to NF-05)**.
 
-3. **NF-03: API Latency Verification**
-   * **Objective**: Measure round-trip execution latency under standard operating loads.
-   * **Input**: Standard API request payload bursts.
-   * **Expected Result**: p99 latency remains below 1500ms across all destination endpoints.
+The tests are aligned with the project NFR targets.
 
-4. **NF-04: Volume Scalability**
-   * **Objective**: Test horizontal scaling behavior during massive month-end closing data loads.
-   * **Input**: 10x standard transaction batch size.
-   * **Expected Result**: Kubernetes horizontal pod autoscalers (HPA) scale processing workers dynamically.
+---
 
-5. **NF-05: 24-Hour Endurance Test**
-   * **Objective**: Verify system stability and absence of memory leaks over a continuous 24-hour run.
-   * **Input**: Continuous simulated event stream.
-   * **Expected Result**: Stable memory consumption with zero OOM errors or performance degradation.
+## NF-01 — Peak Load Ingestion
 
-6. **NF-06: Cold-Start Container Scaling**
-   * **Objective**: Evaluate container provisioning speed and request handling when scaling microservice workers from zero replicas under sudden traffic spikes.
-   * **Input**: Immediate burst of 300 concurrent extraction requests while worker pods are scaled to zero.
-   * **Expected Result**: Kubernetes horizontal and cluster autoscalers provision workers within SLA, preventing gateway timeout errors.
+**Objective:**  
+Validate that the middleware can process the required baseline throughput
+during peak batch extraction.
+
+**Baseline Requirement:**
+
+```text
+Minimum throughput: 500 records/minute

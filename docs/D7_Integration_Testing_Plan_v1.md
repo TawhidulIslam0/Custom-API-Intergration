@@ -1,11 +1,52 @@
-# Integration Testing Plan (Deliverable 7)
+# Integration Testing Plan
 
-## Overview
-This document compiles the comprehensive integration testing framework for the SAP S/4HANA to Zetheta FinSight integration platform, encompassing 25 rigorous test scenarios, test data requirements, and a requirements traceability matrix.
+**Project:** FDE-9B Integration  
+**Integration:** SAP S/4HANA → Integration Middleware → Zetheta FinSight  
+**Version:** 1.1  
+**Status:** Final
 
-## Core Components
-1. **Functional Scenarios (F-01 to F-10)**: Validates happy path extractions, AP/AR sync, master data delta processing, multi-company code handling, fiscal periods, hierarchy flattening, P2P flows, bank statements, budget vs. actuals, and end-of-day reconciliation (`testing/functional-scenarios.md`).
-2. **Non-Functional Scenarios (NF-01 to NF-05)**: Evaluates peak load ingestion, concurrent extractions, API latency SLAs, volume scalability, and 24-hour endurance (`testing/non-functional-scenarios.md`).
-3. **Failure Injection Scenarios (FI-01 to FI-05)**: Tests system resilience against SAP connection drops, API throttling, Kafka broker failures, malformed payloads, and network partitions (`testing/failure-injection-scenarios.md`).
-4. **Security & Reconciliation Scenarios (SEC-01 to SEC-03, REC-01 to REC-02)**: Validates OAuth token expiry/refresh, unauthorized access blocking, data encryption, financial variance detection, and completeness checks (`testing/security-reconciliation-scenarios.md`).
-5. **Requirements Traceability Matrix**: Maps all 30 test scenarios back to their specific functional and technical design requirements (`testing/traceability-matrix.md`).
+---
+
+## 1. Overview
+
+The integration testing strategy validates functional correctness,
+performance, resilience, security, reconciliation, and operational
+readiness of the SAP S/4HANA to Zetheta FinSight integration.
+
+The final testing inventory contains **36 scenarios**.
+
+---
+
+## 2. Test Scenario Summary
+
+| Category | Scenarios |
+|---|---:|
+| Functional | 10 |
+| Non-Functional | 5 |
+| Failure Injection | 6 |
+| Security | 4 |
+| Reconciliation | 3 |
+| Operational / Deployment | 8 |
+| **Total** | **36** |
+
+---
+
+## 3. Functional Testing
+
+The functional suite contains 10 scenarios:
+
+- F-01 Happy Path Extraction
+- F-02 Accounts Payable Synchronization
+- F-03 Accounts Receivable Synchronization
+- F-04 Master Data Delta Processing
+- F-05 Multi-Company Code Processing
+- F-06 Fiscal Period Processing
+- F-07 Cost Centre Hierarchy Flattening
+- F-08 Procure-to-Pay Flow
+- F-09 Bank Statement Normalization
+- F-10 Budget vs Actual and End-of-Day Reconciliation
+
+Detailed scenarios are documented in:
+
+```text
+testing/TST_Functional_01.md
