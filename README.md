@@ -1,7 +1,25 @@
 # Custom API Integration: SAP S/4HANA to Zetheta FinSight
 
+
 ## Project Overview
-This repository contains the design, specification, and complete architectural documentation for a production-grade integration middleware between Meridian Manufacturing’s on-premise SAP S/4HANA ERP system and Zetheta FinSight, a cloud-based financial analytics platform. Developed as part of Zetheta's FDE-9B project.
+This repository contains the design, specification, and proof-of-conceptimplementation for a production-grade integration between MeridianManufacturing's SAP S/4HANA ERP system and Zetheta FinSight, a financial
+analytics platform. Built as part of Zetheta's FDE-9B project (Custom API Integration).
+
+
+## Repository Structure
+- `docs/` — Deliverables 2, 4, 5, 6, 7, 9 (specifications and stakeholder docs), risk register
+- `mappings/` — Deliverable 3: 56 field-level data transformation mappings
+- `runbook/` — Deliverable 8: deployment runbook and rollback procedure
+- `api-specs/` — OpenAPI 3.0 specifications (source + destination) and Postman collections
+- `diagrams/` — C4 architecture diagrams, data flow diagrams, sequence diagrams, monitoring dashboard mockup
+- `mock-servers/` — Working mock SAP and FinSight servers for local testing
+- `scripts/` — Working proof-of-concept code: transformation, error handling, reconciliation, monitoring, tests
+
+## Running 
+1. `npm install`
+2. Start mock servers (separate terminals): `node mock-servers/sap-mock-server.js` and `node mock-servers/finsight-mock-server.js`
+3. Run the pipeline: `node scripts/run-pipeline.js`
+4. Run individual test suites: see `scripts/test-*.js`
 
 ---
 
@@ -12,7 +30,7 @@ This repository contains the design, specification, and complete architectural d
 * [x] **Day 2: Integration Architecture Design (C4 Levels 1–3)**
   * *Artifacts:* C4 Level 1 (System Context), C4 Level 2 (Container), C4 Level 3 (Component diagrams), technology stack justification, network & deployment architecture.
 * [x] **Day 3: Data Flow Diagrams & Sequence Diagrams** 
-  * *Artifacts:* 4 data flow diagrams (ODP delta, batch, error/retry, reconciliation), Mermaid `.mmd` sequence diagrams, risk register (`docs/D1_Risk_Register_v1.md`), and Deliverable 1 (D1) first complete draft.
+  * *Artifacts:* 4 data flow diagrams (ODP delta, batch, error/retry, reconciliation), Mermaid `.mmd` sequence diagrams, risk register (`docs/risk-register.md`), and Deliverable 1 (D1) first complete draft.
 * [x] **Day 4: API Specification — Source Endpoints (SAP S/4HANA)**
   * *Artifacts:* OpenAPI 3.0 YAML for source endpoints SRC-001 through SRC-012, Postman collection, source documentation.
 * [x] **Day 5: API Specification — Destination Endpoints (FinSight)**
@@ -28,9 +46,9 @@ This repository contains the design, specification, and complete architectural d
 * [x] **Day 10: Monitoring & Alerting Dashboard Specification**
   * *Artifacts:* 12-panel dashboard spec, JSON structured logging standard, alerting rules, Deliverable 6 (D6) complete.
 * [x] **Day 11: Integration Testing Plan**
-  * *Artifacts:* Comprehensive test scenarios (functional, non-functional, failure injection, security, reconciliation) under (`docs/D7_Integration_Testing_Plan_v1.md`), traceability matrix, Deliverable 7 (D7) complete.
+  * *Artifacts:* Comprehensive test scenarios (functional, non-functional, failure injection, security, reconciliation), traceability matrix, Deliverable 7 (D7) complete.
 * [x] **Day 12: Deployment Runbook & Rollback Procedure**
-  * *Artifacts:* Pre-deployment checklist, step-by-step guide (`deployment/D8_Deployment_Steps_v1.md`), verification checks, rollback decision matrix, Deliverable 8 (D8) complete.
+  * *Artifacts:* Pre-deployment checklist, step-by-step guide, verification checks, rollback decision matrix, Deliverable 8 (D8) complete.
 * [x] **Day 13: Stakeholder Communication Documents**
   * *Artifacts:* Executive Summary (CFO), Technical Handoff (Client IT), Design Review (Platform Engineering), Deliverable 9 (D9) complete.
 * [x] **Day 14: Quality Assurance, Polish & Cross-Reference Check**

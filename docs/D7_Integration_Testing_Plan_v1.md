@@ -1,52 +1,38 @@
-# Integration Testing Plan
+# Deliverable 7: Integration Testing Plan
 
-**Project:** FDE-9B Integration  
-**Integration:** SAP S/4HANA → Integration Middleware → Zetheta FinSight  
-**Version:** 1.1  
-**Status:** Final
+## Overview
+25 test scenarios covering functional (10), non-functional (5), failure
+injection (5), security (3), and reconciliation (2) categories, per
+Appendix G of the project brief. Full details of expected results are in
+that appendix; this document adds the traceability matrix and automation
+status.
 
----
+## Traceability Matrix
 
-## 1. Overview
+| Test ID | Category | Covers Requirement | Automated? |
+|---------|----------|---------------------|------------|
+| TST-FNC-001 | Functional | GL extraction happy path | Yes — `scripts/test-pipeline.js` |
+| TST-FNC-002 | Functional | AP multi-currency | Partial — transform logic only |
+| TST-FNC-003 | Functional | Master data delta sync | Manual |
+| TST-FNC-004 | Functional | Multi-company-code routing | Yes |
+| TST-FNC-005 | Functional | Fiscal period mapping | Yes — see `scripts/test-fiscal-mapping.js` |
+| TST-FNC-006 | Functional | 7-level hierarchy flattening | Manual |
+| TST-FNC-007 | Functional | P2P flow tracing | Manual |
+| TST-FNC-008 | Functional | Bank statement load | Manual |
+| TST-FNC-009 | Functional | Budget vs actual variance | Manual |
+| TST-FNC-010 | Functional | End-of-day full reconciliation | Yes — `scripts/test-reconciliation.js` |
+| TST-NFR-001 to 005 | Non-functional | Performance, concurrency, latency, scalability, endurance | Manual (requires load testing tools) |
+| TST-FLR-001 to 005 | Failure injection | RFC failure, 429, Kafka failure, malformed data, network partition | Yes (partial) — `scripts/test-resilience.js` |
+| TST-SEC-001 to 003 | Security | Token expiry, invalid tokens, encryption | Manual |
+| TST-REC-001 to 002 | Reconciliation | Deliberate discrepancy, orphan reference | Yes — `scripts/test-reconciliation.js` |
 
-The integration testing strategy validates functional correctness,
-performance, resilience, security, reconciliation, and operational
-readiness of the SAP S/4HANA to Zetheta FinSight integration.
+## Test Data Requirements
 
-The final testing inventory contains **36 scenarios**.
+- SAP sandbox with sample GL entries across 3 company codes
+- Vendor/customer master data with at least one intentionally invalid GSTIN
+- A 7-level cost centre hierarchy for flattening tests
+- Deliberately malformed records (missing fields, bad dates) for DQ tests
 
----
-
-## 2. Test Scenario Summary
-
-| Category | Scenarios |
-|---|---:|
-| Functional | 10 |
-| Non-Functional | 5 |
-| Failure Injection | 6 |
-| Security | 4 |
-| Reconciliation | 3 |
-| Operational / Deployment | 8 |
-| **Total** | **36** |
-
----
-
-## 3. Functional Testing
-
-The functional suite contains 10 scenarios:
-
-- F-01 Happy Path Extraction
-- F-02 Accounts Payable Synchronization
-- F-03 Accounts Receivable Synchronization
-- F-04 Master Data Delta Processing
-- F-05 Multi-Company Code Processing
-- F-06 Fiscal Period Processing
-- F-07 Cost Centre Hierarchy Flattening
-- F-08 Procure-to-Pay Flow
-- F-09 Bank Statement Normalization
-- F-10 Budget vs Actual and End-of-Day Reconciliation
-
-Detailed scenarios are documented in:
-
-```text
-testing/TST_Functional_01.md
+Full scenario details (preconditions, steps, expected results) for all 25
+tests are documented in Appendix G of the project brief and are followed
+exactly for this project.

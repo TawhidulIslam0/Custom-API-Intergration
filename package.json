@@ -1,32 +1,29 @@
 {
   "name": "fde-9b-integration",
   "version": "1.0.0",
-  "lockfileVersion": 3,
-  "requires": true,
-  "author": "",
   "description": "Custom API Integration between SAP S/4HANA and Zetheta FinSight for Meridian Manufacturing",
-  "keywords": [],
-  "license": "ISC",
   "main": "index.js",
-  "packages": {
-    "": {
-      "name": "fde-9b-integration",
-      "version": "1.0.0",
-      "devDependencies": {}
-    }
-  },
-  "devDependencies": {
-    "@stoplight/spectral-cli": "^6.16.3",
-    "nodemon": "^3.1.14"
-  },
   "scripts": {
-    "test": "node scripts/test-fiscal-mapping.js && node scripts/test-malformed-batch.js && node scripts/test-metrics.js && node scripts/test-reconciliation.js && node scripts/test-resilience.js",
-    "smoke": "node scripts/smoke-test.js",
-    "pipeline": "node scripts/run-pipeline.js"
+    "test": "node scripts/test-fiscal-mapping.js && node scripts/test-malformed-batch.js && node scripts/test-metrics.js && node scripts/test-reconciliation.js && node scripts/test-resilience.js"
   },
+  "keywords": [
+    "sap",
+    "s4hana",
+    "finsight",
+    "api",
+    "integration",
+    "middleware"
+  ],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "axios": "^1.19.0",
     "express": "^5.2.1",
     "uuid": "^14.0.2"
+  },
+  "devDependencies": {
+    "@stoplight/spectral-cli": "^6.16.3",
+    "nodemon": "^3.1.14"
   }
 }
+

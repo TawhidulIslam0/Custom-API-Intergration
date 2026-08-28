@@ -1,0 +1,511 @@
+openapi: 3.0.3
+info:
+  title: Zetheta FinSight Ingestion API
+  description: >
+    Destination-side API specification for loading transformed financial data
+    into Zetheta FinSight from Meridian Manufacturing's SAP S/4HANA integration.
+  version: 1.0.0
+  contact:
+    name: FDE-9B Integration Team
+
+servers:
+  - url: https://api.finsight.zetheta.com/v1
+    description: Production FinSight API (AWS Mumbai region)
+
+security:
+  - oauth2: []
+
+tags:
+  - name: General Ledger
+  - name: Accounts Payable
+  - name: Accounts Receivable
+  - name: Cost Centre
+  - name: Profit Centre
+  - name: Material Ledger
+  - name: Procurement
+  - name: Sales
+  - name: Fixed Assets
+  - name: Banking
+  - name: Cost Accounting
+  - name: Inventory
+
+paths:
+  # DST-001: General Ledger
+  /journal-entries:
+    post:
+      summary: DST-001 - Load General Ledger journal entries
+      operationId: postJournalEntries
+      description: Idempotent load of transformed journal entries into FinSight
+      tags: [General Ledger]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JournalEntry'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadSuccessResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/BusinessRuleViolation'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  # DST-002: Accounts Payable
+  /accounts-payable:
+    post:
+      summary: DST-002 - Load Accounts Payable open items
+      operationId: postAccountsPayable
+      description: Idempotent load of vendor open items with ageing bucket classification
+      tags: [Accounts Payable]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APItem'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  # DST-003: Accounts Receivable
+  /accounts-receivable:
+    post:
+      summary: DST-003 - Load Accounts Receivable open items
+      operationId: postAccountsReceivable
+      description: Idempotent load of customer open items with dunning level classification
+      tags: [Accounts Receivable]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ARItem'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
+  # DST-004: Cost Centre
+  /cost-centres:
+    post:
+      summary: DST-004 - Load Cost Centre master data
+      operationId: postCostCentres
+      description: Idempotent load of cost centre master data with flattened hierarchy level
+      tags: [Cost Centre]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostCentre'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # DST-005: Profit Centre
+  /profit-centres:
+    post:
+      summary: DST-005 - Load Profit Centre master data
+      operationId: postProfitCentres
+      description: Idempotent load of profit centre master data aligned to segment reporting
+      tags: [Profit Centre]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfitCentre'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # DST-006: Material Ledger
+  /material-valuations:
+    post:
+      summary: DST-006 - Load Material Ledger valuation data
+      operationId: postMaterialValuations
+      description: Idempotent load of actual costing layer and stock valuation data
+      tags: [Material Ledger]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaterialValuation'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # DST-007: Purchase Orders
+  /purchase-orders:
+    post:
+      summary: DST-007 - Load Purchase Order data
+      operationId: postPurchaseOrders
+      description: Idempotent load of purchase order data with GR/IR reconciliation fields
+      tags: [Procurement]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrder'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/BusinessRuleViolation'
+
+  # DST-008: Sales Orders
+  /sales-orders:
+    post:
+      summary: DST-008 - Load Sales Order data
+      operationId: postSalesOrders
+      description: Idempotent load of sales order data with revenue recognition stage
+      tags: [Sales]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesOrder'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # DST-009: Fixed Assets
+  /fixed-assets:
+    post:
+      summary: DST-009 - Load Fixed Asset data
+      operationId: postFixedAssets
+      description: Idempotent load of fixed asset master and depreciation data
+      tags: [Fixed Assets]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FixedAsset'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # DST-010: Bank Statements
+  /bank-statements:
+    post:
+      summary: DST-010 - Load Bank Statement data
+      operationId: postBankStatements
+      description: Idempotent load of bank statement line items with clearing status
+      tags: [Banking]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankStatement'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # DST-011: Budget vs Actual
+  /budget-actuals:
+    post:
+      summary: DST-011 - Load Budget vs Actual data
+      operationId: postBudgetActuals
+      description: Idempotent load of budget and actual cost centre variance data
+      tags: [Cost Accounting]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BudgetActual'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # DST-012: Inventory
+  /inventory:
+    post:
+      summary: DST-012 - Load Inventory stock data
+      operationId: postInventory
+      description: Idempotent load of storage location stock level data
+      tags: [Inventory]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryItem'
+      responses:
+        '201':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # Webhook callback registration
+  /webhooks/subscriptions:
+    post:
+      summary: Register a webhook callback for batch load completion events
+      operationId: postWebhookSubscription
+      description: Registers a callback URL to receive batch completion and reconciliation break notifications
+      tags: [General Ledger]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callbackUrl:
+                  type: string
+                  format: uri
+                  example: "https://integration.meridian.internal/webhooks/finsight"
+                events:
+                  type: array
+                  items:
+                    type: string
+                    enum: [batch.completed, batch.failed, reconciliation.break]
+      responses:
+        '201':
+          description: Subscription created
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >
+        OAuth 2.0 Client Credentials flow. Access tokens expire after 3600s;
+        the integration platform must refresh proactively before expiry
+        (see ERR-LOAD-005 handling in Error Handling Framework).
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.finsight.zetheta.com/oauth/token
+          scopes:
+            write:financial-data: Write access to load financial records
+            read:financial-data: Read access to verify loaded records
+
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            invalidRequest:
+              value: { errorCode: "INVALID_REQUEST", message: "Missing required field: postingDate" }
+    Unauthorized:
+      description: Token expired or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            tokenExpired:
+              value: { errorCode: "TOKEN_EXPIRED", message: "OAuth token has expired" }
+    Conflict:
+      description: Duplicate record (idempotent)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            duplicate:
+              value: { errorCode: "DUPLICATE_ENTRY", message: "Record with same business key already exists" }
+    BusinessRuleViolation:
+      description: Data violates FinSight business rules
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimited:
+      description: Too many requests
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+        X-RateLimit-Remaining:
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        message:
+          type: string
+
+    LoadSuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "created"
+        documentId:
+          type: string
+
+    JournalEntry:
+      type: object
+      required: [documentId, postingDate, glAccount, amountLC, localCurrency]
+      properties:
+        documentId: { type: string, example: "MC01-2026-5000000001" }
+        postingDate: { type: string, format: date, example: "2026-03-15" }
+        documentDate: { type: string, format: date, example: "2026-03-14" }
+        glAccount: { type: string, example: "400000" }
+        amountLC: { type: number, format: double, example: 45230.50 }
+        localCurrency: { type: string, example: "INR" }
+        costCentre: { type: string, example: "1000100" }
+        profitCentre: { type: string, example: "10001000" }
+        fiscalPeriod: { type: string, example: "012" }
+        type: { type: string, enum: [DEBIT, CREDIT] }
+
+    APItem:
+      type: object
+      properties:
+        vendorId: { type: string, example: "0000100234" }
+        companyCode: { type: string, example: "MC01" }
+        amount: { type: number, example: 12500.00 }
+        ageingBucket: { type: string, example: "0-30" }
+
+    ARItem:
+      type: object
+      properties:
+        customerId: { type: string, example: "0000200456" }
+        companyCode: { type: string, example: "MC01" }
+        amount: { type: number, example: 8900.00 }
+        dunningLevel: { type: string, example: "0" }
+
+    CostCentre:
+      type: object
+      properties:
+        costCentreId: { type: string, example: "1000100" }
+        name: { type: string, example: "IT Department" }
+        hierarchyLevel: { type: integer, example: 3 }
+
+    ProfitCentre:
+      type: object
+      properties:
+        profitCentreId: { type: string, example: "10001000" }
+        name: { type: string, example: "Automotive Division" }
+        segment: { type: string, example: "Automotive" }
+
+    MaterialValuation:
+      type: object
+      properties:
+        materialId: { type: string, example: "MAT-000123" }
+        movingAvgPrice: { type: number, example: 245.50 }
+        stockQuantity: { type: number, example: 1200 }
+
+    PurchaseOrder:
+      type: object
+      properties:
+        poNumber: { type: string, example: "4500001234" }
+        vendorId: { type: string, example: "0000100234" }
+        netPrice: { type: number, example: 1500.00 }
+
+    SalesOrder:
+      type: object
+      properties:
+        soNumber: { type: string, example: "0000001234" }
+        customerId: { type: string, example: "0000200456" }
+        netValue: { type: number, example: 34500.00 }
+
+    FixedAsset:
+      type: object
+      properties:
+        assetId: { type: string, example: "000100000123" }
+        description: { type: string, example: "CNC Machine - Plant PL01" }
+
+    BankStatement:
+      type: object
+      properties:
+        statementAmount: { type: number, example: 500000.00 }
+        valueDate: { type: string, format: date, example: "2026-03-15" }
+        clearingStatus: { type: string, enum: [CLEARED, OPEN] }
+
+    BudgetActual:
+      type: object
+      properties:
+        costCentreId: { type: string, example: "1000100" }
+        valueType: { type: string, example: "actual" }
+        amount: { type: number, example: 150000.00 }
+
+    InventoryItem:
+      type: object
+      properties:
+        materialId: { type: string, example: "MAT-000123" }
+        plant: { type: string, example: "PL01" }
+        unrestrictedStock: { type: number, example: 450 }

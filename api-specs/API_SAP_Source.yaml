@@ -1,0 +1,470 @@
+openapi: 3.0.3
+info:
+  title: SAP S/4HANA Source Extraction API
+  description: >
+    Source-side API specification for extracting financial and operational
+    data from Meridian Manufacturing's SAP S/4HANA system via OData/CDS Views.
+  version: 1.0.0
+  contact:
+    name: FDE-9B Integration Team
+
+servers:
+  - url: https://sap-prd.meridian.internal/sap/opu/odata/sap
+    description: Production SAP Gateway
+
+security:
+  - oauth2: []
+
+tags:
+  - name: General Ledger
+  - name: Accounts Payable
+  - name: Accounts Receivable
+  - name: Cost Centre
+  - name: Profit Centre
+  - name: Material Ledger
+  - name: Procurement
+  - name: Sales
+  - name: Fixed Assets
+  - name: Banking
+  - name: Cost Accounting
+  - name: Inventory
+
+paths:
+  # SRC-001: General Ledger
+  /API_JOURNALENTRYITEM_SRV/JournalEntryItems:
+    get:
+      summary: SRC-001 - Extract General Ledger journal entries
+      operationId: getJournalEntries
+      description: Delta-capable extraction from ACDOCA via CDS View I_JournalEntryItem
+      tags: [General Ledger]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/CompanyCode'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GLEntryResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  # SRC-002: Accounts Payable
+  /API_OPENACCOUNTSPAYABLE_SRV/AccountsPayableItems:
+    get:
+      summary: SRC-002 - Extract Accounts Payable open items
+      operationId: getAccountsPayableItems
+      description: Vendor open items from BSIK/BSAK via CDS View
+      tags: [Accounts Payable]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/CompanyCode'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APItemResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  # SRC-003: Accounts Receivable
+  /API_OPENACCOUNTSRECEIVABLE_SRV/AccountsReceivableItems:
+    get:
+      summary: SRC-003 - Extract Accounts Receivable open items
+      operationId: getAccountsReceivableItems
+      description: Customer open items from BSID/BSAD via CDS View
+      tags: [Accounts Receivable]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/CompanyCode'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ARItemResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  # SRC-004: Cost Centre
+  /API_COSTCENTER_SRV/CostCentres:
+    get:
+      summary: SRC-004 - Extract Cost Centre master data
+      operationId: getCostCentres
+      description: Cost centre hierarchy and attributes from CSKS/CSKT
+      tags: [Cost Centre]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostCentreResponse'
+
+  # SRC-005: Profit Centre
+  /API_PROFITCENTER_SRV/ProfitCentres:
+    get:
+      summary: SRC-005 - Extract Profit Centre master data
+      operationId: getProfitCentres
+      description: Profit centre hierarchy from CEPC/CEPCT
+      tags: [Profit Centre]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfitCentreResponse'
+
+  # SRC-006: Material Ledger
+  /API_MATERIAL_LEDGER_SRV/MaterialValuations:
+    get:
+      summary: SRC-006 - Extract Material Ledger valuation data
+      operationId: getMaterialValuations
+      description: Actual costing layer from MBEW
+      tags: [Material Ledger]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaterialValuationResponse'
+
+  # SRC-007: Purchase Orders
+  /API_PURCHASEORDER_PROCESS_SRV/PurchaseOrders:
+    get:
+      summary: SRC-007 - Extract Purchase Order data
+      operationId: getPurchaseOrders
+      description: PO header/item/schedule lines from EKKO/EKPO/EKET
+      tags: [Procurement]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrderResponse'
+
+  # SRC-008: Sales Orders
+  /API_SALES_ORDER_SRV/SalesOrders:
+    get:
+      summary: SRC-008 - Extract Sales Order data
+      operationId: getSalesOrders
+      description: SO header/item/schedule lines from VBAK/VBAP/VBEP
+      tags: [Sales]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesOrderResponse'
+
+  # SRC-009: Fixed Assets
+  /API_FIXEDASSET_SRV/FixedAssets:
+    get:
+      summary: SRC-009 - Extract Fixed Asset data
+      operationId: getFixedAssets
+      description: Asset master and depreciation from ANLA/ANLZ/ANLP
+      tags: [Fixed Assets]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixedAssetResponse'
+
+  # SRC-010: Bank Statements
+  /API_BANKSTATEMENT_SRV/BankStatements:
+    get:
+      summary: SRC-010 - Extract Bank Statement data
+      operationId: getBankStatements
+      description: Statement header/items from FEBKO/FEBEP
+      tags: [Banking]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankStatementResponse'
+
+  # SRC-011: Budget vs Actual
+  /API_COSTCENTER_BUDGET_SRV/BudgetActuals:
+    get:
+      summary: SRC-011 - Extract Budget vs Actual data
+      operationId: getBudgetActuals
+      description: CO totals from COSP/COSS for variance reporting
+      tags: [Cost Accounting]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BudgetActualResponse'
+
+  # SRC-012: Inventory
+  /API_MATERIAL_STOCK_SRV/MaterialStocks:
+    get:
+      summary: SRC-012 - Extract Inventory stock data
+      operationId: getMaterialStocks
+      description: Storage location stock levels from MARD
+      tags: [Inventory]
+      parameters:
+        - $ref: '#/components/parameters/DeltaToken'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryResponse'
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://sap-prd.meridian.internal/oauth/token
+          scopes:
+            read:finance: Read access to financial data
+
+  parameters:
+    DeltaToken:
+      name: delta_token
+      in: query
+      description: Token from previous extraction; omit for full extraction
+      schema:
+        type: string
+    CompanyCode:
+      name: company_code
+      in: query
+      description: Filter by SAP company code (MC01, MC02, MC03)
+      schema:
+        type: string
+    PageSize:
+      name: page_size
+      in: query
+      description: Number of records per page (max 5000)
+      schema:
+        type: integer
+        default: 1000
+        maximum: 5000
+
+  responses:
+    RateLimited:
+      description: Too many requests
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: Internal SAP error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+        message:
+          type: string
+
+    GLEntryResponse:
+      type: object
+      properties:
+        deltaToken:
+          type: string
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              RBUKRS: { type: string, example: "MC01" }
+              GJAHR: { type: string, example: "2026" }
+              BELNR: { type: string, example: "5000000001" }
+              RACCT: { type: string, example: "0000400000" }
+              HSL: { type: string, example: "45230.50" }
+              RHCUR: { type: string, example: "INR" }
+              KOSTL: { type: string, example: "1000100" }
+              PRCTR: { type: string, example: "10001000" }
+              BUDAT: { type: string, example: "20260315" }
+              MONAT: { type: string, example: "12" }
+
+    APItemResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              LIFNR: { type: string, example: "0000100234" }
+              BUKRS: { type: string, example: "MC01" }
+              DMBTR: { type: string, example: "12500.00" }
+              ZUONR: { type: string }
+              AUGDT: { type: string, nullable: true }
+
+    ARItemResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              KUNNR: { type: string, example: "0000200456" }
+              BUKRS: { type: string, example: "MC01" }
+              DMBTR: { type: string, example: "8900.00" }
+
+    CostCentreResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              KOSTL: { type: string, example: "1000100" }
+              KTEXT: { type: string, example: "IT Department" }
+              BUKRS: { type: string, example: "MC01" }
+
+    ProfitCentreResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              PRCTR: { type: string, example: "10001000" }
+              KTEXT: { type: string, example: "Automotive Division" }
+
+    MaterialValuationResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              MATNR: { type: string, example: "MAT-000123" }
+              VERPR: { type: string, example: "245.50" }
+              LBKUM: { type: string, example: "1200" }
+
+    PurchaseOrderResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              EBELN: { type: string, example: "4500001234" }
+              LIFNR: { type: string, example: "0000100234" }
+              NETPR: { type: string, example: "1500.00" }
+
+    SalesOrderResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              VBELN: { type: string, example: "0000001234" }
+              KUNNR: { type: string, example: "0000200456" }
+              NETWR: { type: string, example: "34500.00" }
+
+    FixedAssetResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              ANLN1: { type: string, example: "000100000123" }
+              TXT50: { type: string, example: "CNC Machine - Plant PL01" }
+
+    BankStatementResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              KWBTR: { type: string, example: "500000.00" }
+              VALUT: { type: string, example: "20260315" }
+
+    BudgetActualResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              KOSTL: { type: string, example: "1000100" }
+              WRTTP: { type: string, example: "04" }
+              WKG001: { type: string, example: "150000.00" }
+
+    InventoryResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              MATNR: { type: string, example: "MAT-000123" }
+              WERKS: { type: string, example: "PL01" }
+              LABST: { type: string, example: "450" }

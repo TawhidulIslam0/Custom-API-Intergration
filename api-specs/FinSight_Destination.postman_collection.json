@@ -1,0 +1,2836 @@
+{
+    "item": [
+        {
+            "name": "journal-entries",
+            "description": "",
+            "item": [
+                {
+                    "id": "22ec5017-13e6-41ba-bb57-6e53a6ff39af",
+                    "name": "DST-001 - Load General Ledger journal entries",
+                    "request": {
+                        "name": "DST-001 - Load General Ledger journal entries",
+                        "description": {
+                            "content": "Idempotent load of transformed journal entries into FinSight",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "journal-entries"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"documentId\": \"<string>\",\n  \"postingDate\": \"<date>\",\n  \"glAccount\": \"<string>\",\n  \"amountLC\": \"<double>\",\n  \"localCurrency\": \"<string>\",\n  \"documentDate\": \"<date>\",\n  \"costCentre\": \"<string>\",\n  \"profitCentre\": \"<string>\",\n  \"fiscalPeriod\": \"<string>\",\n  \"type\": \"CREDIT\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "c2e75dfd-e9ae-4240-91c7-84017fd42307",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "journal-entries"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"documentId\": \"<string>\",\n  \"postingDate\": \"<date>\",\n  \"glAccount\": \"<string>\",\n  \"amountLC\": \"<double>\",\n  \"localCurrency\": \"<string>\",\n  \"documentDate\": \"<date>\",\n  \"costCentre\": \"<string>\",\n  \"profitCentre\": \"<string>\",\n  \"fiscalPeriod\": \"<string>\",\n  \"type\": \"CREDIT\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"status\": \"<string>\",\n  \"documentId\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "96871295-d3f1-46c9-8b16-76334228ed21",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "journal-entries"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"documentId\": \"<string>\",\n  \"postingDate\": \"<date>\",\n  \"glAccount\": \"<string>\",\n  \"amountLC\": \"<double>\",\n  \"localCurrency\": \"<string>\",\n  \"documentDate\": \"<date>\",\n  \"costCentre\": \"<string>\",\n  \"profitCentre\": \"<string>\",\n  \"fiscalPeriod\": \"<string>\",\n  \"type\": \"CREDIT\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "d3f25799-a8bb-49bf-a38f-1b2b8ffe4370",
+                            "name": "Token expired or invalid",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "journal-entries"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"documentId\": \"<string>\",\n  \"postingDate\": \"<date>\",\n  \"glAccount\": \"<string>\",\n  \"amountLC\": \"<double>\",\n  \"localCurrency\": \"<string>\",\n  \"documentDate\": \"<date>\",\n  \"costCentre\": \"<string>\",\n  \"profitCentre\": \"<string>\",\n  \"fiscalPeriod\": \"<string>\",\n  \"type\": \"CREDIT\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Unauthorized",
+                            "code": 401,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "3f432221-8e10-4766-a403-534ee0fe2841",
+                            "name": "Duplicate record (idempotent)",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "journal-entries"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"documentId\": \"<string>\",\n  \"postingDate\": \"<date>\",\n  \"glAccount\": \"<string>\",\n  \"amountLC\": \"<double>\",\n  \"localCurrency\": \"<string>\",\n  \"documentDate\": \"<date>\",\n  \"costCentre\": \"<string>\",\n  \"profitCentre\": \"<string>\",\n  \"fiscalPeriod\": \"<string>\",\n  \"type\": \"CREDIT\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Conflict",
+                            "code": 409,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "9939ce08-f475-4ab7-95b3-ad6274647376",
+                            "name": "Data violates FinSight business rules",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "journal-entries"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"documentId\": \"<string>\",\n  \"postingDate\": \"<date>\",\n  \"glAccount\": \"<string>\",\n  \"amountLC\": \"<double>\",\n  \"localCurrency\": \"<string>\",\n  \"documentDate\": \"<date>\",\n  \"costCentre\": \"<string>\",\n  \"profitCentre\": \"<string>\",\n  \"fiscalPeriod\": \"<string>\",\n  \"type\": \"CREDIT\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                            "code": 422,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "a2aa9a4a-dd2d-4653-97b3-9843152345ad",
+                            "name": "Too many requests",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "journal-entries"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"documentId\": \"<string>\",\n  \"postingDate\": \"<date>\",\n  \"glAccount\": \"<string>\",\n  \"amountLC\": \"<double>\",\n  \"localCurrency\": \"<string>\",\n  \"documentDate\": \"<date>\",\n  \"costCentre\": \"<string>\",\n  \"profitCentre\": \"<string>\",\n  \"fiscalPeriod\": \"<string>\",\n  \"type\": \"CREDIT\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Too Many Requests",
+                            "code": 429,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "Retry-After",
+                                    "value": "<integer>"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "X-RateLimit-Remaining",
+                                    "value": "<integer>"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "accounts-payable",
+            "description": "",
+            "item": [
+                {
+                    "id": "238bc522-80c7-47a6-9359-61a67b406cb0",
+                    "name": "DST-002 - Load Accounts Payable open items",
+                    "request": {
+                        "name": "DST-002 - Load Accounts Payable open items",
+                        "description": {
+                            "content": "Idempotent load of vendor open items with ageing bucket classification",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "accounts-payable"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"vendorId\": \"<string>\",\n  \"companyCode\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"ageingBucket\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "78cd05e3-03b4-46e0-b8e1-370f453c1bca",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "accounts-payable"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"vendorId\": \"<string>\",\n  \"companyCode\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"ageingBucket\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "06723bc0-0f7d-4fe7-bd59-fa6e94e25764",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "accounts-payable"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"vendorId\": \"<string>\",\n  \"companyCode\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"ageingBucket\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "baf2e30c-cf9b-4bc5-878e-9f95644fec87",
+                            "name": "Duplicate record (idempotent)",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "accounts-payable"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"vendorId\": \"<string>\",\n  \"companyCode\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"ageingBucket\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Conflict",
+                            "code": 409,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "accounts-receivable",
+            "description": "",
+            "item": [
+                {
+                    "id": "1761dc49-e4c2-4796-8db6-eb712a14fe1a",
+                    "name": "DST-003 - Load Accounts Receivable open items",
+                    "request": {
+                        "name": "DST-003 - Load Accounts Receivable open items",
+                        "description": {
+                            "content": "Idempotent load of customer open items with dunning level classification",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "accounts-receivable"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"customerId\": \"<string>\",\n  \"companyCode\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"dunningLevel\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "2a1ced7c-1259-46eb-a068-9bd9150f72f9",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "accounts-receivable"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"customerId\": \"<string>\",\n  \"companyCode\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"dunningLevel\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "68eaa202-67b6-41cc-9282-7ca5650875a3",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "accounts-receivable"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"customerId\": \"<string>\",\n  \"companyCode\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"dunningLevel\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "818f2cc6-57d8-4e12-935d-8c42300ccabb",
+                            "name": "Duplicate record (idempotent)",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "accounts-receivable"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"customerId\": \"<string>\",\n  \"companyCode\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"dunningLevel\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Conflict",
+                            "code": 409,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "cost-centres",
+            "description": "",
+            "item": [
+                {
+                    "id": "79713973-db33-4577-a0f3-9bc46b7f055f",
+                    "name": "DST-004 - Load Cost Centre master data",
+                    "request": {
+                        "name": "DST-004 - Load Cost Centre master data",
+                        "description": {
+                            "content": "Idempotent load of cost centre master data with flattened hierarchy level",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "cost-centres"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"costCentreId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"hierarchyLevel\": \"<integer>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "121cc7c2-52de-44c3-9306-5a8432df899c",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "cost-centres"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"costCentreId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"hierarchyLevel\": \"<integer>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "bbb20e77-bddf-4321-8382-e92624701d53",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "cost-centres"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"costCentreId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"hierarchyLevel\": \"<integer>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "profit-centres",
+            "description": "",
+            "item": [
+                {
+                    "id": "ef01f310-9014-45df-8454-4464a6a02993",
+                    "name": "DST-005 - Load Profit Centre master data",
+                    "request": {
+                        "name": "DST-005 - Load Profit Centre master data",
+                        "description": {
+                            "content": "Idempotent load of profit centre master data aligned to segment reporting",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "profit-centres"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"profitCentreId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"segment\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "5dd454f6-afe8-4e36-8d3e-6fa5ed499516",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "profit-centres"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"profitCentreId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"segment\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "92594cd1-4b24-4f60-aec4-95028cf21313",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "profit-centres"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"profitCentreId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"segment\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "material-valuations",
+            "description": "",
+            "item": [
+                {
+                    "id": "5514469b-7286-43c2-9d82-29d945abd3c6",
+                    "name": "DST-006 - Load Material Ledger valuation data",
+                    "request": {
+                        "name": "DST-006 - Load Material Ledger valuation data",
+                        "description": {
+                            "content": "Idempotent load of actual costing layer and stock valuation data",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "material-valuations"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"materialId\": \"<string>\",\n  \"movingAvgPrice\": \"<number>\",\n  \"stockQuantity\": \"<number>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "53fef74e-fdae-41fc-ba13-01c33dbd93ba",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "material-valuations"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"materialId\": \"<string>\",\n  \"movingAvgPrice\": \"<number>\",\n  \"stockQuantity\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "16e1ddb0-69b7-41aa-8580-b659a25b8955",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "material-valuations"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"materialId\": \"<string>\",\n  \"movingAvgPrice\": \"<number>\",\n  \"stockQuantity\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "purchase-orders",
+            "description": "",
+            "item": [
+                {
+                    "id": "165b91de-c27e-4ec0-9fe5-221fbb0aba22",
+                    "name": "DST-007 - Load Purchase Order data",
+                    "request": {
+                        "name": "DST-007 - Load Purchase Order data",
+                        "description": {
+                            "content": "Idempotent load of purchase order data with GR/IR reconciliation fields",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "purchase-orders"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"poNumber\": \"<string>\",\n  \"vendorId\": \"<string>\",\n  \"netPrice\": \"<number>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "7a0d1b67-5d74-4d11-93f3-bbbb8382756f",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "purchase-orders"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"poNumber\": \"<string>\",\n  \"vendorId\": \"<string>\",\n  \"netPrice\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "c41fbf8d-be32-4b3d-8917-0899b2592c6c",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "purchase-orders"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"poNumber\": \"<string>\",\n  \"vendorId\": \"<string>\",\n  \"netPrice\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "3e4999c1-7203-4f52-862b-a0113e545d3b",
+                            "name": "Data violates FinSight business rules",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "purchase-orders"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"poNumber\": \"<string>\",\n  \"vendorId\": \"<string>\",\n  \"netPrice\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                            "code": 422,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "sales-orders",
+            "description": "",
+            "item": [
+                {
+                    "id": "25463a62-6a6e-4a02-bd06-65bf525500cf",
+                    "name": "DST-008 - Load Sales Order data",
+                    "request": {
+                        "name": "DST-008 - Load Sales Order data",
+                        "description": {
+                            "content": "Idempotent load of sales order data with revenue recognition stage",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "sales-orders"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"soNumber\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"netValue\": \"<number>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "6d213870-e242-4125-959d-fb8eca442abb",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "sales-orders"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"soNumber\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"netValue\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "a10dc343-db4a-40fa-a3e8-02aad4a527ab",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "sales-orders"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"soNumber\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"netValue\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "fixed-assets",
+            "description": "",
+            "item": [
+                {
+                    "id": "95d8fe5a-dede-4917-850c-533a4d743209",
+                    "name": "DST-009 - Load Fixed Asset data",
+                    "request": {
+                        "name": "DST-009 - Load Fixed Asset data",
+                        "description": {
+                            "content": "Idempotent load of fixed asset master and depreciation data",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "fixed-assets"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"assetId\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "94ca9fee-87c1-47d3-8b31-a4df361add3a",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "fixed-assets"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"assetId\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "08a36adc-1b48-46f0-8c12-44e94b70b599",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "fixed-assets"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"assetId\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "bank-statements",
+            "description": "",
+            "item": [
+                {
+                    "id": "2de4ee5a-3423-4182-b8f0-73627773e1e2",
+                    "name": "DST-010 - Load Bank Statement data",
+                    "request": {
+                        "name": "DST-010 - Load Bank Statement data",
+                        "description": {
+                            "content": "Idempotent load of bank statement line items with clearing status",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "bank-statements"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"statementAmount\": \"<number>\",\n  \"valueDate\": \"<date>\",\n  \"clearingStatus\": \"OPEN\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "b6f3f792-2168-46b0-8da7-de687b7856e0",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "bank-statements"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"statementAmount\": \"<number>\",\n  \"valueDate\": \"<date>\",\n  \"clearingStatus\": \"OPEN\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "391a1ade-30eb-4907-b2dc-ddb1c6e7c915",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "bank-statements"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"statementAmount\": \"<number>\",\n  \"valueDate\": \"<date>\",\n  \"clearingStatus\": \"OPEN\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "budget-actuals",
+            "description": "",
+            "item": [
+                {
+                    "id": "2fea602c-5ec1-4a9b-82a2-bb72f2687dde",
+                    "name": "DST-011 - Load Budget vs Actual data",
+                    "request": {
+                        "name": "DST-011 - Load Budget vs Actual data",
+                        "description": {
+                            "content": "Idempotent load of budget and actual cost centre variance data",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "budget-actuals"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"costCentreId\": \"<string>\",\n  \"valueType\": \"<string>\",\n  \"amount\": \"<number>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "034f5029-fdeb-4c10-93e5-aa896df00fe2",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "budget-actuals"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"costCentreId\": \"<string>\",\n  \"valueType\": \"<string>\",\n  \"amount\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "99d7ef2d-fee7-4e13-93c5-9513a885f418",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "budget-actuals"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"costCentreId\": \"<string>\",\n  \"valueType\": \"<string>\",\n  \"amount\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "inventory",
+            "description": "",
+            "item": [
+                {
+                    "id": "6555f8d6-17f3-419f-94c3-74f9e3f5e206",
+                    "name": "DST-012 - Load Inventory stock data",
+                    "request": {
+                        "name": "DST-012 - Load Inventory stock data",
+                        "description": {
+                            "content": "Idempotent load of storage location stock level data",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "inventory"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "disabled": false,
+                                "description": {
+                                    "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                    "type": "text/plain"
+                                },
+                                "key": "Idempotency-Key",
+                                "value": "<string>"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"materialId\": \"<string>\",\n  \"plant\": \"<string>\",\n  \"unrestrictedStock\": \"<number>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "61898825-bc40-430a-a2e6-7fda5abd6d29",
+                            "name": "Created",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "inventory"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"materialId\": \"<string>\",\n  \"plant\": \"<string>\",\n  \"unrestrictedStock\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "7f9c4f32-6027-4f27-8f18-0d3417a5b1e0",
+                            "name": "Invalid request",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "inventory"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "disabled": false,
+                                        "description": {
+                                            "content": "(Required) Unique key per logical record (recommend using documentId) to prevent duplicate processing on retry",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Idempotency-Key",
+                                        "value": "<string>"
+                                    },
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "description": {
+                                            "content": "Added as a part of security scheme: oauth2",
+                                            "type": "text/plain"
+                                        },
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"materialId\": \"<string>\",\n  \"plant\": \"<string>\",\n  \"unrestrictedStock\": \"<number>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"errorCode\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "webhooks",
+            "description": "",
+            "item": [
+                {
+                    "name": "subscriptions",
+                    "description": "",
+                    "item": [
+                        {
+                            "id": "ac7fd864-ea01-478c-b4c0-d787f8bed79a",
+                            "name": "Register a webhook callback for batch load completion events",
+                            "request": {
+                                "name": "Register a webhook callback for batch load completion events",
+                                "description": {
+                                    "content": "Registers a callback URL to receive batch completion and reconciliation break notifications",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "webhooks",
+                                        "subscriptions"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"callbackUrl\": \"<uri>\",\n  \"events\": [\n    \"batch.completed\",\n    \"reconciliation.break\"\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "88da9424-f8e3-4aa8-ae2e-ba0181f4d656",
+                                    "name": "Subscription created",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "webhooks",
+                                                "subscriptions"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": []
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Content-Type",
+                                                "value": "application/json"
+                                            },
+                                            {
+                                                "description": {
+                                                    "content": "Added as a part of security scheme: oauth2",
+                                                    "type": "text/plain"
+                                                },
+                                                "key": "Authorization",
+                                                "value": "<token>"
+                                            }
+                                        ],
+                                        "method": "POST",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"callbackUrl\": \"<uri>\",\n  \"events\": [\n    \"batch.completed\",\n    \"reconciliation.break\"\n  ]\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "headerFamily": "json",
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "Created",
+                                    "code": 201,
+                                    "header": [],
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "text"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "oauth2",
+        "oauth2": [
+            {
+                "type": "any",
+                "value": "write:financial-data read:financial-data",
+                "key": "scope"
+            },
+            {
+                "type": "any",
+                "value": "https://auth.finsight.zetheta.com/oauth/token",
+                "key": "accessTokenUrl"
+            },
+            {
+                "type": "any",
+                "value": "client_credentials",
+                "key": "grant_type"
+            }
+        ]
+    },
+    "event": [],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "https://api.finsight.zetheta.com/v1"
+        }
+    ],
+    "info": {
+        "_postman_id": "19c2b194-fc3c-4837-a01c-bd18b3282e0e",
+        "name": "Zetheta FinSight Ingestion API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": {
+            "content": "Destination-side API specification for loading transformed financial data into Zetheta FinSight from Meridian Manufacturing's SAP S/4HANA integration.\n\n\nContact Support:\n Name: FDE-9B Integration Team",
+            "type": "text/plain"
+        }
+    }
+}

@@ -1,0 +1,22 @@
+# Sequence Diagram 1 — Happy Path End-to-End Sync
+
+```mermaid
+sequenceDiagram
+    participant S as Scheduler
+    participant GW as API Gateway
+    participant SAP as SAP S/4HANA
+    participant K as Kafka
+    participant TE as Transform Engine
+    participant FS as FinSight
+
+    S->>GW: Trigger extraction (every 30 min)
+    GW->>SAP: GET /JournalEntryItems (delta_token)
+    SAP-->>GW: 200 OK + records + new delta token
+    GW->>K: Publish raw records
+    K->>TE: Consume raw records
+    TE->>TE: Apply field mappings + validation
+    TE->>FS: POST /journal-entries
+    FS-->>TE: 201 Created
+    TE->>K: Publish success event
+    Note over TE,FS: Reconciliation runs after batch completes
+```
